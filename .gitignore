@@ -24,7 +24,6 @@ Config/
 # Sensitive data
 .env
 .env.*
-!.env.example
 *.key
 *.pem
 *.cert
