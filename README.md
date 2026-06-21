@@ -13,7 +13,7 @@
 
 <br>
 
-![Version](https://img.shields.io/badge/v1.2.0-8B5CF6?style=flat-square)
+![Version](https://img.shields.io/badge/v1.2.1-8B5CF6?style=flat-square)
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-22C55E?style=flat-square&logo=githubpages&logoColor=white)](https://bayraktarozcan.github.io/8000Hz-Engine-Labs/)
 [![License](https://img.shields.io/badge/License-MIT-22C55E?style=flat-square)](LICENSE)
 [![Stack](https://img.shields.io/badge/Stack-Vanilla%20JS-5391FE?style=flat-square&logo=javascript&logoColor=white)](src/index.js)

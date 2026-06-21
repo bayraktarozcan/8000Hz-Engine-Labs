@@ -28,6 +28,11 @@
 
 ---
 
+### v1.2.1 — 2026-06-21
+
+#### Changed
+- **Version bump**: Updated version references across all files
+
 ### v1.2.0 — 2026-06-21
 
 #### Added
@@ -136,6 +141,11 @@ Initial release.
 > Biçim: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
+
+### v1.2.1 — 2026-06-21
+
+#### Değişenler
+- **Sürüm güncellemesi**: Tüm dosyalardaki sürüm referansları güncellendi
 
 ### v1.2.0 — 2026-06-21
 
