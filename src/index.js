@@ -277,23 +277,23 @@ const games = [
     {
         id: 26,
         name: "Squad - Public Testing",
-        engine: "Unreal Engine 5.7 (Modifiye Edilmiş)",
-        api: "Standard RawInput Module with Heavy Overhead",
+        engine: "Unreal Engine 5.7 (UE4→UE5.5→UE5.7, OWI Modifiye)",
+        api: "OWI Custom Input Layer (Main Thread-Bound RawInput)",
         status: "incompatible",
         statusText: "Kesinlikle Uyumsuz",
         badgeColor: "bg-gaming-danger/10 border-gaming-danger/30 text-gaming-danger",
-        analysis: "Squad, devasa haritaları, karmaşık ses/iletişim motoru ve asker simülasyonu katmanları nedeniyle CPU'ya en çok yük binen oyunlardandır. UE5.7'ye geçilse dahi modifiye edilmiş altyapısı, 8000Hz farenin ürettiği koordinat yığınını sindiremez. Fareyi her çevirdiğinizde motorun döngü süresi fırlar, FPS yarı yarıya düşebilir.",
+        analysis: "Squad, Eylül 2025'teki 9.0 güncellemesiyle UE4'ten UE5.5'e, Nisan 2026'daki 10.4 güncellemesiyle de UE5.7'ye geçti (SteamDB/Squad 10.4 Patch Notes). Ancak Offworld Industries, girdi işleme katmanını kendine özel (OWI Custom Input Layer) yazdığı için standart UE5.7 Enhanced Input iyileştirmeleri geçerli değildir. UE5.7'nin CPU kazanımları (render thread paralelleştirme, %35'e varan CPU iyileştirmesi) ana iş parçacığındaki girdi yükünü azaltmaz. 100 oyunculu sunucular, Chaos Physics, Metasounds ve modifiye edilmiş altyapı CPU'yu üst sınıra zorlarken 8000Hz farenin 0.125 ms'lik kesme istekleri iş parçacığı kuyruğunu tıkar. Fare her çevrildiğinde motor döngü süresi fırlar, FPS yarı yarıya düşebilir.",
         tag: "unreal"
     },
     {
         id: 27,
         name: "Squad",
-        engine: "Unreal Engine 5.7 (Derinlemesine Modifiye)",
-        api: "Standard RawInput Module with Heavy Overhead",
+        engine: "Unreal Engine 5.7 (UE4→UE5.5→UE5.7, OWI Modifiye)",
+        api: "OWI Custom Input Layer (Main Thread-Bound RawInput)",
         status: "incompatible",
         statusText: "Kesinlikle Uyumsuz",
         badgeColor: "bg-gaming-danger/10 border-gaming-danger/30 text-gaming-danger",
-        analysis: "Public Testing sürümüyle aynı motor darboğazını paylaşır. Saniyede 8000 kesme isteği, yoğun işlemci tabanlı savaş simülasyonunda girdi darboğazına yakalanır ve en güçlü sistemlerde dahi kamera sarsıntılı, kesintili hareket eder.",
+        analysis: "Public Testing sürümüyle aynı motor darboğazını paylaşır. Squad'ın UE5.7'ye geçişi (10.4) GPU çökme düzeltmeleri, DLSS 4.5 ve tuş bağlama sistemi revizyonu getirmiştir ancak RawInput boru hattında değişiklik yapılmamıştır. Oyun, girdileri hâlâ ana iş parçacığına kilitli (main thread-bound) şekilde işler. Saniyede 8000 kesme isteği, yoğun işlemci tabanlı savaş simülasyonunda girdi darboğazına yakalanır ve en güçlü sistemlerde dahi kamera sarsıntılı, kesintili hareket eder. Kaynak: Squad 10.4 Steam Patch Notes (30 Nisan 2026).",
         tag: "unreal"
     },
     {
