@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>8000Hz Oyun Motoru Uyumluluk Portalı</title>
+    <title data-i18n="page-title">8000Hz Oyun Motoru Uyumluluk Portalı</title>
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -25,19 +25,22 @@
             </div>
             <div>
                 <span class="text-xl font-bold tracking-wider tech-font text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">8000Hz ENGINE LABS</span>
-                <p class="text-xs text-slate-400 -mt-1 font-semibold">Girdi Uyumluluk Portalı</p>
+                <p class="text-xs text-slate-400 -mt-1 font-semibold" data-i18n="header-subtitle">Girdi Uyumluluk Portalı</p>
             </div>
         </div>
         <nav class="hidden md:flex space-x-8 text-sm font-medium text-slate-300">
-            <a href="#analiz" class="hover:text-indigo-400 transition-colors">Teknik Analiz</a>
-            <a href="#database" class="hover:text-indigo-400 transition-colors">Oyun Veritabanı</a>
-            <a href="#test" class="hover:text-indigo-400 transition-colors">Uyumluluk Testi</a>
-            <a href="#kaynaklar" class="hover:text-indigo-400 transition-colors">Birincil Kaynaklar</a>
+            <a href="#analiz" class="hover:text-indigo-400 transition-colors" data-i18n="nav-analysis">Teknik Analiz</a>
+            <a href="#database" class="hover:text-indigo-400 transition-colors" data-i18n="nav-database">Oyun Veritabanı</a>
+            <a href="#test" class="hover:text-indigo-400 transition-colors" data-i18n="nav-test">Uyumluluk Testi</a>
+            <a href="#kaynaklar" class="hover:text-indigo-400 transition-colors" data-i18n="nav-sources">Birincil Kaynaklar</a>
         </nav>
-        <div>
-                <span class="px-3 py-1 text-xs font-semibold uppercase tracking-wider text-indigo-400 bg-indigo-900/30 border border-indigo-500/30 rounded-full tech-font">
-                    v1.1.0
-                </span>
+        <div class="flex items-center space-x-3">
+            <button id="lang-toggle" onclick="switchLanguage()" class="px-2.5 py-1 text-xs font-bold uppercase tracking-wider bg-gaming-border border border-gaming-border rounded-md text-slate-300 hover:text-indigo-400 hover:border-indigo-500 transition-all cursor-pointer">
+                EN
+            </button>
+            <span class="px-3 py-1 text-xs font-semibold uppercase tracking-wider text-indigo-400 bg-indigo-900/30 border border-indigo-500/30 rounded-full tech-font">
+                v1.2.0
+            </span>
         </div>
     </div>
 </header>
@@ -46,27 +49,27 @@
 
     <!-- Hero Section -->
     <div class="text-center py-12 md:py-20 max-w-3xl mx-auto">
-        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight tech-font mb-6 leading-none">
+        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight tech-font mb-6 leading-none" data-i18n="hero-title">
             Donanım Gücün Sınırsız Olabilir, Peki <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500">Oyun Kodun</span> Hazır mı?
         </h1>
-        <p class="text-lg text-slate-400 leading-relaxed mb-8">
+        <p class="text-lg text-slate-400 leading-relaxed mb-8" data-i18n="hero-desc">
             8000Hz fare, klavye ve diğer girdi aygıtlarının 0.125 ms zaman aralığındaki veri akışını işletim sisteminiz kaldırsa dahi, oyun motorunun iç kod mimarisi bu yoğunluğu sindiremeyebilir. İşte 30 oyunun motor düzeyinde kapsamlı testi.
         </p>
         <div class="flex flex-wrap justify-center gap-4">
-            <a href="#database" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg shadow-lg shadow-indigo-500/20 transition-all transform hover:-translate-y-0.5">
+            <a href="#database" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg shadow-lg shadow-indigo-500/20 transition-all transform hover:-translate-y-0.5" data-i18n="hero-btn-db">
                 Veritabanını Keşfet
             </a>
-            <a href="#test" class="px-6 py-3 bg-gaming-card hover:bg-gaming-border border border-gaming-border text-slate-200 font-medium rounded-lg transition-all transform hover:-translate-y-0.5">
+            <a href="#test" class="px-6 py-3 bg-gaming-card hover:bg-gaming-border border border-gaming-border text-slate-200 font-medium rounded-lg transition-all transform hover:-translate-y-0.5" data-i18n="hero-btn-test">
                 Sistem Uyumluluğunu Sına
             </a>
         </div>
     </div>
 
-    <!-- Metric Cards (Dinamikleştirilmiş) -->
+    <!-- Metric Cards -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16">
         <div class="bg-gaming-card border border-gaming-border rounded-xl p-6 relative overflow-hidden group hover:border-indigo-500/50 transition-colors">
             <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-indigo-500/5 rounded-full group-hover:scale-125 transition-transform"></div>
-            <p class="text-sm font-semibold text-slate-400 uppercase tracking-wider">İncelenen Oyun</p>
+            <p class="text-sm font-semibold text-slate-400 uppercase tracking-wider" data-i18n="stat-total-label">İncelenen Oyun</p>
             <p class="text-4xl font-bold tech-font text-white mt-2" id="stat-total">--</p>
             <div class="w-full bg-slate-800 h-1.5 rounded-full mt-4">
                 <div class="bg-indigo-500 h-1.5 rounded-full" id="bar-total" style="width: 0%"></div>
@@ -74,7 +77,7 @@
         </div>
         <div class="bg-gaming-card border border-gaming-border rounded-xl p-6 relative overflow-hidden group hover:border-gaming-success/50 transition-colors">
             <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-gaming-success/5 rounded-full group-hover:scale-125 transition-transform"></div>
-            <p class="text-sm font-semibold text-slate-400 uppercase tracking-wider">Tam Uyumlu</p>
+            <p class="text-sm font-semibold text-slate-400 uppercase tracking-wider" data-i18n="stat-compatible-label">Tam Uyumlu</p>
             <p class="text-4xl font-bold tech-font text-gaming-success mt-2" id="stat-compatible">--</p>
             <div class="w-full bg-slate-800 h-1.5 rounded-full mt-4">
                 <div class="bg-gaming-success h-1.5 rounded-full transition-all duration-500" id="bar-compatible" style="width: 0%"></div>
@@ -82,7 +85,7 @@
         </div>
         <div class="bg-gaming-card border border-gaming-border rounded-xl p-6 relative overflow-hidden group hover:border-gaming-warning/50 transition-colors">
             <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-gaming-warning/5 rounded-full group-hover:scale-125 transition-transform"></div>
-            <p class="text-sm font-semibold text-slate-400 uppercase tracking-wider">Kısmen Uyumlu</p>
+            <p class="text-sm font-semibold text-slate-400 uppercase tracking-wider" data-i18n="stat-partial-label">Kısmen Uyumlu</p>
             <p class="text-4xl font-bold tech-font text-gaming-warning mt-2" id="stat-partial">--</p>
             <div class="w-full bg-slate-800 h-1.5 rounded-full mt-4">
                 <div class="bg-gaming-warning h-1.5 rounded-full transition-all duration-500" id="bar-partial" style="width: 0%"></div>
@@ -90,7 +93,7 @@
         </div>
         <div class="bg-gaming-card border border-gaming-border rounded-xl p-6 relative overflow-hidden group hover:border-gaming-danger/50 transition-colors">
             <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-gaming-danger/5 rounded-full group-hover:scale-125 transition-transform"></div>
-            <p class="text-sm font-semibold text-slate-400 uppercase tracking-wider">Uyumsuz (1000Hz Şart)</p>
+            <p class="text-sm font-semibold text-slate-400 uppercase tracking-wider" data-i18n="stat-incompatible-label">Uyumsuz (1000Hz Şart)</p>
             <p class="text-4xl font-bold tech-font text-gaming-danger mt-2" id="stat-incompatible">--</p>
             <div class="w-full bg-slate-800 h-1.5 rounded-full mt-4">
                 <div class="bg-gaming-danger h-1.5 rounded-full transition-all duration-500" id="bar-incompatible" style="width: 0%"></div>
@@ -101,44 +104,41 @@
     <!-- Technical Explanation Section -->
     <section id="analiz" class="mb-20 scroll-mt-24">
         <div class="border-l-4 border-indigo-500 pl-4 mb-8">
-            <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight tech-font">TEKNİK ANALİZ: 8000Hz DARBOĞAZININ ARKASINDAKİ 3 ANA NEDEN</h2>
-            <p class="text-slate-400 text-sm mt-1">Sisteminiz değil, oyun motorları neden tıkanır?</p>
+            <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight tech-font" data-i18n="analysis-title">TEKNİK ANALİZ: 8000Hz DARBOĞAZININ ARKASINDAKİ 3 ANA NEDEN</h2>
+            <p class="text-slate-400 text-sm mt-1" data-i18n="analysis-subtitle">Sisteminiz değil, oyun motorları neden tıkanır?</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Bottleneck 1 -->
             <div class="bg-gaming-card border border-gaming-border rounded-xl p-6 relative">
                 <div class="w-12 h-12 rounded-lg bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-5">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                     </svg>
                 </div>
-                <h3 class="text-lg font-bold text-white mb-2 tech-font tracking-wide">1. Ana İş Parçacığı Darboğazı (Main Thread Bottleneck)</h3>
-                <p class="text-slate-400 text-sm leading-relaxed">
+                <h3 class="text-lg font-bold text-white mb-2 tech-font tracking-wide" data-i18n="bottleneck1-title">1. Ana İş Parçacığı Darboğazı (Main Thread Bottleneck)</h3>
+                <p class="text-slate-400 text-sm leading-relaxed" data-i18n="bottleneck1-desc">
                     Eski nesil oyun motorları girdi verilerini, fizik ve render döngüleri ile aynı tek iş parçacığı (<code class="text-indigo-300">Main Thread</code>) üzerinde işler. Saniyede 8000 koordinat güncelleme mesajı bu zincire daldığında, güçlü işlemci çekirdekleriniz boştayken bile oyun döngüsü takılır.
                 </p>
             </div>
-            <!-- Bottleneck 2 -->
             <div class="bg-gaming-card border border-gaming-border rounded-xl p-6 relative">
                 <div class="w-12 h-12 rounded-lg bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-5">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                     </svg>
                 </div>
-                <h3 class="text-lg font-bold text-white mb-2 tech-font tracking-wide">2. Matematiksel Yuvarlama Hataları (Precision Errors)</h3>
-                <p class="text-slate-400 text-sm leading-relaxed">
+                <h3 class="text-lg font-bold text-white mb-2 tech-font tracking-wide" data-i18n="bottleneck2-title">2. Matematiksel Yuvarlama Hataları (Precision Errors)</h3>
+                <p class="text-slate-400 text-sm leading-relaxed" data-i18n="bottleneck2-desc">
                     Yüksek yenileme hızında iki rapor arasındaki zaman farkı sadece <code class="text-purple-300">Δt = 0.125 ms</code>'dir. Birçok eski motor, 32-bit kayan noktalı ondalık sayı (<code class="text-purple-300">float</code>) hassasiyeti nedeniyle bu mikro zaman dilimlerini çarparak hesaplarken yuvarlama hataları yapar ve kamerada mikro titremeler (<code class="text-purple-300">jitter</code>) üretir.
                 </p>
             </div>
-            <!-- Bottleneck 3 -->
             <div class="bg-gaming-card border border-gaming-border rounded-xl p-6 relative">
                 <div class="w-12 h-12 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-5">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20" />
                     </svg>
                 </div>
-                <h3 class="text-lg font-bold text-white mb-2 tech-font tracking-wide">3. Girdi Mesajı Yığılması (Input Queue Saturation)</h3>
-                <p class="text-slate-400 text-sm leading-relaxed">
+                <h3 class="text-lg font-bold text-white mb-2 tech-font tracking-wide" data-i18n="bottleneck3-title">3. Girdi Mesajı Yığılması (Input Queue Saturation)</h3>
+                <p class="text-slate-400 text-sm leading-relaxed" data-i18n="bottleneck3-desc">
                     Windows Win32 Raw Input API'sini asenkron (bağımsız) iş parçacığı yerine doğrudan senkron (kare hızına kilitli) tüketen oyun kodları, biriken mesaj yığınını eritemez. Bu yığılma, fare hareketinin arkadan gelmesi (<code class="text-blue-300">input lag</code>) veya ani hızlı dönüşlerde kameranın anlık olarak donmasıyla sonuçlanır.
                 </p>
             </div>
@@ -149,168 +149,151 @@
     <section id="database" class="mb-20 scroll-mt-24">
         <div class="border-l-4 border-indigo-500 pl-4 mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-                <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight tech-font">30 OYUN MOTORU VERİTABANI</h2>
-                <p class="text-slate-400 text-sm mt-1">İstediğiniz oyunu aratın, motor mimarisini ve test sonuçlarını saniyeler içinde analiz edin.</p>
+                <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight tech-font" data-i18n="db-title">30 OYUN MOTORU VERİTABANI</h2>
+                <p class="text-slate-400 text-sm mt-1" data-i18n="db-subtitle">İstediğiniz oyunu aratın, motor mimarisini ve test sonuçlarını saniyeler içinde analiz edin.</p>
             </div>
-            <!-- Reset Button -->
-            <button onclick="resetFilters()" class="text-xs bg-gaming-border border border-gaming-border hover:border-indigo-500 hover:text-indigo-400 px-4 py-2 rounded-lg transition-all self-start md:self-auto font-medium">
+            <button onclick="resetFilters()" class="text-xs bg-gaming-border border border-gaming-border hover:border-indigo-500 hover:text-indigo-400 px-4 py-2 rounded-lg transition-all self-start md:self-auto font-medium" data-i18n="db-reset-btn">
                 Filtreleri Sıfırla
             </button>
         </div>
 
-        <!-- Search and Filter Controls -->
         <div class="bg-gaming-card border border-gaming-border rounded-xl p-6 mb-8">
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
-                <!-- Search Input -->
                 <div class="lg:col-span-2 relative">
-                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
-                        </span>
-                    <input type="text" id="search-input" oninput="filterGames()" placeholder="Oyun adı, motor veya API ara..." class="w-full pl-10 pr-4 py-3 bg-gaming-dark border border-gaming-border rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-indigo-500 transition-colors">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </span>
+                    <input type="text" id="search-input" oninput="filterGames()" data-i18n-placeholder="db-search-placeholder" placeholder="Oyun adı, motor veya API ara..." class="w-full pl-10 pr-4 py-3 bg-gaming-dark border border-gaming-border rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-indigo-500 transition-colors">
                 </div>
-                <!-- Status Filter -->
                 <div>
                     <select id="status-filter" onchange="filterGames()" class="w-full px-4 py-3 bg-gaming-dark border border-gaming-border rounded-lg text-slate-300 focus:outline-none focus:border-indigo-500 transition-colors">
-                        <option value="all">Tüm Uyumluluk Durumları</option>
-                        <option value="compatible">Tam Uyumlu (⭐)</option>
-                        <option value="partial">Kısmen Uyumlu (⚠️)</option>
-                        <option value="incompatible">Kesinlikle Uyumsuz (❌)</option>
+                        <option value="all" data-i18n="filter-all-status">Tüm Uyumluluk Durumları</option>
+                        <option value="compatible" data-i18n="filter-compatible">Tam Uyumlu (⭐)</option>
+                        <option value="partial" data-i18n="filter-partial">Kısmen Uyumlu (⚠️)</option>
+                        <option value="incompatible" data-i18n="filter-incompatible">Kesinlikle Uyumsuz (❌)</option>
                     </select>
                 </div>
-                <!-- Engine Filter -->
                 <div>
                     <select id="engine-filter" onchange="filterGames()" class="w-full px-4 py-3 bg-gaming-dark border border-gaming-border rounded-lg text-slate-300 focus:outline-none focus:border-indigo-500 transition-colors">
-                        <option value="all">Tüm Oyun Motorları</option>
+                        <option value="all" data-i18n="filter-all-engine">Tüm Oyun Motorları</option>
                         <option value="unreal">Unreal Engine</option>
                         <option value="frostbite">Frostbite</option>
                         <option value="rage">RAGE</option>
                         <option value="unity">Unity</option>
                         <option value="prism3d">Prism3D</option>
-                        <option value="other">Diğer Özel Motorlar</option>
+                        <option value="other" data-i18n="filter-other">Diğer Özel Motorlar</option>
                     </select>
                 </div>
             </div>
         </div>
 
-        <!-- Games Grid -->
-        <div id="games-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Javascript will inject game cards dynamically here -->
-        </div>
+        <div id="games-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
-        <!-- Empty State -->
         <div id="empty-state" class="hidden text-center py-12 bg-gaming-card border border-gaming-border border-dashed rounded-xl">
             <svg class="mx-auto h-12 w-12 text-slate-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <h3 class="text-lg font-semibold text-slate-300">Aramanıza Uygun Oyun Bulunamadı</h3>
-            <p class="text-sm text-slate-500 mt-1">Lütfen arama teriminizi veya filtreleri değiştirmeyi deneyin.</p>
+            <h3 class="text-lg font-semibold text-slate-300" data-i18n="empty-title">Aramanıza Uygun Oyun Bulunamadı</h3>
+            <p class="text-sm text-slate-500 mt-1" data-i18n="empty-desc">Lütfen arama teriminizi veya filtreleri değiştirmeyi deneyin.</p>
         </div>
     </section>
 
-    <!-- Interactive Diagnostic Tool Section -->
+    <!-- Diagnostic Tool Section -->
     <section id="test" class="mb-20 scroll-mt-24">
         <div class="border-l-4 border-indigo-500 pl-4 mb-8">
-            <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight tech-font">8000Hz UYUMLULUK TESTİ (DIAGNOSTIC TOOL)</h2>
-            <p class="text-slate-400 text-sm mt-1">Oynamak istediğiniz oyunun parametrelerini girin, sisteminizin bu oyunda 8000Hz kaldırıp kaldıramayacağını hesaplayalım.</p>
+            <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight tech-font" data-i18n="diag-title">8000Hz UYUMLULUK TESTİ (DIAGNOSTIC TOOL)</h2>
+            <p class="text-slate-400 text-sm mt-1" data-i18n="diag-subtitle">Oynamak istediğiniz oyunun parametrelerini girin, sisteminizin bu oyunda 8000Hz kaldırıp kaldıramayacağını hesaplayalım.</p>
         </div>
 
         <div class="bg-gaming-card border border-gaming-border rounded-xl p-8 max-w-4xl mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Diagnostic Form -->
                 <div class="space-y-6">
                     <div>
-                        <label class="block text-sm font-semibold text-slate-300 mb-2">1. İşlemci Gücünüz & Çekirdek Sayınız</label>
+                        <label class="block text-sm font-semibold text-slate-300 mb-2" data-i18n="diag-cpu-label">1. İşlemci Gücünüz & Çekirdek Sayınız</label>
                         <div class="grid grid-cols-2 gap-3">
-                            <label class="border border-gaming-border hover:border-indigo-500 rounded-lg p-3 flex items-center space-x-2 cursor-pointer transition-colors bg-gaming-dark" id="cpu-high-label">
+                            <label class="border border-gaming-border hover:border-indigo-500 rounded-lg p-3 flex items-center space-x-2 cursor-pointer transition-colors bg-gaming-dark">
                                 <input type="radio" name="cpu-power" value="high" checked class="text-indigo-600 focus:ring-indigo-500">
-                                <span class="text-sm text-slate-200 font-medium">Son Nesil / 8+ Çekirdek</span>
+                                <span class="text-sm text-slate-200 font-medium" data-i18n="diag-cpu-high">Son Nesil / 8+ Çekirdek</span>
                             </label>
-                            <label class="border border-gaming-border hover:border-indigo-500 rounded-lg p-3 flex items-center space-x-2 cursor-pointer transition-colors bg-gaming-dark" id="cpu-low-label">
+                            <label class="border border-gaming-border hover:border-indigo-500 rounded-lg p-3 flex items-center space-x-2 cursor-pointer transition-colors bg-gaming-dark">
                                 <input type="radio" name="cpu-power" value="low" class="text-indigo-600 focus:ring-indigo-500">
-                                <span class="text-sm text-slate-200 font-medium">Orta Seviye / Eski</span>
+                                <span class="text-sm text-slate-200 font-medium" data-i18n="diag-cpu-low">Orta Seviye / Eski</span>
                             </label>
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-semibold text-slate-300 mb-2">2. Oyunun Çıkış Yılı Aralığı</label>
+                        <label class="block text-sm font-semibold text-slate-300 mb-2" data-i18n="diag-year-label">2. Oyunun Çıkış Yılı Aralığı</label>
                         <select id="diag-year" class="w-full px-4 py-3 bg-gaming-dark border border-gaming-border rounded-lg text-slate-300 focus:outline-none focus:border-indigo-500">
-                            <option value="modern">2021 ve Sonrası (Modern Dönem)</option>
-                            <option value="mid">2016 - 2020 (Ara Dönem)</option>
-                            <option value="legacy">2015 ve Öncesi (Klasik Dönem)</option>
+                            <option value="modern" data-i18n="diag-year-modern">2021 ve Sonrası (Modern Dönem)</option>
+                            <option value="mid" data-i18n="diag-year-mid">2016 - 2020 (Ara Dönem)</option>
+                            <option value="legacy" data-i18n="diag-year-legacy">2015 ve Öncesi (Klasik Dönem)</option>
                         </select>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-semibold text-slate-300 mb-2">3. Oyun Motoru Mimarisi</label>
+                        <label class="block text-sm font-semibold text-slate-300 mb-2" data-i18n="diag-engine-label">3. Oyun Motoru Mimarisi</label>
                         <select id="diag-engine" class="w-full px-4 py-3 bg-gaming-dark border border-gaming-border rounded-lg text-slate-300 focus:outline-none focus:border-indigo-500">
-                            <option value="asyn">Modern Asenkron Motorlar (Source 2, Swarm vb.)</option>
+                            <option value="asyn" data-i18n="diag-engine-async">Modern Asenkron Motorlar (Source 2, Swarm vb.)</option>
                             <option value="unreal">Unreal Engine 4/5</option>
                             <option value="unity">Unity</option>
-                            <option value="custom">Özel Eski Motorlar (Prism3D, RAGE vb.)</option>
+                            <option value="custom" data-i18n="diag-engine-custom">Özel Eski Motorlar (Prism3D, RAGE vb.)</option>
                         </select>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-semibold text-slate-300 mb-2">4. Grafik API Tercihiniz</label>
+                        <label class="block text-sm font-semibold text-slate-300 mb-2" data-i18n="diag-api-label">4. Grafik API Tercihiniz</label>
                         <div class="grid grid-cols-2 gap-3">
                             <label class="border border-gaming-border hover:border-indigo-500 rounded-lg p-3 flex items-center space-x-2 cursor-pointer transition-colors bg-gaming-dark">
                                 <input type="radio" name="api-type" value="modern" checked class="text-indigo-600 focus:ring-indigo-500">
-                                <span class="text-sm text-slate-200 font-medium">DX12 / Vulkan</span>
+                                <span class="text-sm text-slate-200 font-medium" data-i18n="diag-api-modern">DX12 / Vulkan</span>
                             </label>
                             <label class="border border-gaming-border hover:border-indigo-500 rounded-lg p-3 flex items-center space-x-2 cursor-pointer transition-colors bg-gaming-dark">
                                 <input type="radio" name="api-type" value="legacy" class="text-indigo-600 focus:ring-indigo-500">
-                                <span class="text-sm text-slate-200 font-medium">DX11 / DX9</span>
+                                <span class="text-sm text-slate-200 font-medium" data-i18n="diag-api-legacy">DX11 / DX9</span>
                             </label>
                         </div>
                     </div>
 
-                    <button onclick="calculateCompatibility()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold rounded-lg hover:from-indigo-600 hover:to-purple-700 transition-all shadow-lg shadow-indigo-500/25 uppercase tech-font tracking-wider">
+                    <button onclick="calculateCompatibility()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold rounded-lg hover:from-indigo-600 hover:to-purple-700 transition-all shadow-lg shadow-indigo-500/25 uppercase tech-font tracking-wider" data-i18n="diag-start-btn">
                         Analizi Başlat
                     </button>
                 </div>
 
-                <!-- Diagnostic Result Box -->
                 <div class="bg-gaming-dark rounded-xl p-6 border border-gaming-border flex flex-col justify-between relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-2xl"></div>
-
                     <div>
-                        <h3 class="text-lg font-bold text-slate-200 tech-font tracking-wider mb-4 border-b border-gaming-border pb-3">DİAGNOSTİK ANALİZ RAPORU</h3>
+                        <h3 class="text-lg font-bold text-slate-200 tech-font tracking-wider mb-4 border-b border-gaming-border pb-3" data-i18n="diag-report-title">DİAGNOSTİK ANALİZ RAPORU</h3>
 
-                        <!-- Initial State -->
                         <div id="diag-initial-state" class="text-center py-12">
                             <svg class="mx-auto h-12 w-12 text-slate-600 mb-4 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                             </svg>
-                            <p class="text-slate-400 text-sm">Parametreleri belirledikten sonra testi başlatın.</p>
+                            <p class="text-slate-400 text-sm" data-i18n="diag-init-msg">Parametreleri belirledikten sonra testi başlatın.</p>
                         </div>
 
-                        <!-- Result State -->
                         <div id="diag-result-state" class="hidden space-y-4">
                             <div class="flex items-center space-x-4">
                                 <div class="text-5xl font-extrabold tech-font" id="diag-score">85%</div>
                                 <div>
-                                    <p class="text-sm font-semibold uppercase tracking-wider text-slate-400">Tahmini Uyumluluk</p>
+                                    <p class="text-sm font-semibold uppercase tracking-wider text-slate-400" data-i18n="diag-result-label">Tahmini Uyumluluk</p>
                                     <div class="flex items-center mt-1">
                                         <span class="w-2.5 h-2.5 rounded-full mr-2" id="diag-status-dot"></span>
                                         <span class="text-xs font-bold uppercase" id="diag-status-text">GÜVENLİ</span>
                                     </div>
                                 </div>
                             </div>
-
                             <div class="w-full bg-slate-800 h-3 rounded-full overflow-hidden">
                                 <div class="h-full bg-indigo-500 rounded-full transition-all duration-1000" id="diag-progress-bar" style="width: 0%"></div>
                             </div>
-
                             <div class="text-sm text-slate-400 leading-relaxed bg-gaming-card/50 p-4 border border-gaming-border rounded-lg mt-4" id="diag-feedback">
                                 Yükleniyor...
                             </div>
                         </div>
                     </div>
-
-                    <div class="text-xs text-slate-500 border-t border-gaming-border pt-4 mt-6">
+                    <div class="text-xs text-slate-500 border-t border-gaming-border pt-4 mt-6" data-i18n="diag-disclaimer">
                         *Bu simülasyon, seçtiğiniz oyun motorunun girdi veri tabanı kütüphanesini baz alarak tahmini bir veri stabilizasyonu sonucu üretir. Gerçek sonuçlar arka plan uygulamalarına bağlı olarak değişiklik gösterebilir.
                     </div>
                 </div>
@@ -321,69 +304,57 @@
     <!-- Primary Information Sources Section -->
     <section id="kaynaklar" class="mb-20 scroll-mt-24">
         <div class="border-l-4 border-indigo-500 pl-4 mb-8">
-            <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight tech-font">BİRİNCİL BİLGİ KAYNAKLARI</h2>
-            <p class="text-slate-400 text-sm mt-1">Bu analizde kullanılan teknik dökümanlar, espor testleri ve oyun motoru yayınları.</p>
+            <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight tech-font" data-i18n="sources-title">BİRİNCİL BİLGİ KAYNAKLARI</h2>
+            <p class="text-slate-400 text-sm mt-1" data-i18n="sources-subtitle">Bu analizde kullanılan teknik dökümanlar, espor testleri ve oyun motoru yayınları.</p>
         </div>
-
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Source Card 1 -->
             <div class="bg-gaming-card border border-gaming-border rounded-xl p-6 hover:border-indigo-500/30 transition-all duration-300">
-                <span class="text-xs font-bold uppercase tracking-wider text-indigo-400">Geliştirici Belgeleri</span>
-                <h3 class="text-lg font-bold text-white mt-2 mb-3 tech-font tracking-wide">Microsoft Win32 Raw Input API</h3>
-                <p class="text-sm text-slate-400 leading-relaxed mb-4">
+                <span class="text-xs font-bold uppercase tracking-wider text-indigo-400" data-i18n="source1-tag">Geliştirici Belgeleri</span>
+                <h3 class="text-lg font-bold text-white mt-2 mb-3 tech-font tracking-wide" data-i18n="source1-title">Microsoft Win32 Raw Input API</h3>
+                <p class="text-sm text-slate-400 leading-relaxed mb-4" data-i18n="source1-desc">
                     Windows işletim sistemlerinde yüksek polling rate çevre birimlerinin kilitlenme yaşamadan veri aktarmasını sağlayan düşük seviyeli asenkron mesaj kuyruğu mimarisi standartları.
                 </p>
-                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wide" lang="en">Kaynak: <a href="https://learn.microsoft.com/en-us/windows/win32/inputdev/raw-input" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition-colors">Microsoft Developer Network (MSDN)</a></div>
+                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wide" lang="en"><span data-i18n="source-label">Kaynak</span>: <a href="https://learn.microsoft.com/en-us/windows/win32/inputdev/raw-input" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition-colors" data-i18n="source1-link">Microsoft Developer Network (MSDN)</a></div>
             </div>
-
-            <!-- Source Card 2 -->
             <div class="bg-gaming-card border border-gaming-border rounded-xl p-6 hover:border-indigo-500/30 transition-all duration-300">
-                <span class="text-xs font-bold uppercase tracking-wider text-purple-400">Oyun Motoru Gelişimi</span>
-                <h3 class="text-lg font-bold text-white mt-2 mb-3 tech-font tracking-wide">Valve Source 2 Sub-Tick Dev Blogs</h3>
-                <p class="text-sm text-slate-400 leading-relaxed mb-4">
+                <span class="text-xs font-bold uppercase tracking-wider text-purple-400" data-i18n="source2-tag">Oyun Motoru Gelişimi</span>
+                <h3 class="text-lg font-bold text-white mt-2 mb-3 tech-font tracking-wide" data-i18n="source2-title">Valve Source 2 Sub-Tick Dev Blogs</h3>
+                <p class="text-sm text-slate-400 leading-relaxed mb-4" data-i18n="source2-desc">
                     Counter-Strike 2'nin kare hızı ile girdi yenileme hızını asenkron eşleyen ve milisaniyenin altındaki (sub-tick) hareket verilerini kayıpsız işleyen yeni girdi katmanı incelemeleri.
                 </p>
-                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wide" lang="en">Kaynak: <a href="https://developer.valvesoftware.com/wiki/Source_2#Sub-tick_System" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition-colors">Valve Corporation Technical Publications</a></div>
+                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wide" lang="en"><span data-i18n="source-label">Kaynak</span>: <a href="https://developer.valvesoftware.com/wiki/Source_2#Sub-tick_System" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition-colors" data-i18n="source2-link">Valve Corporation Technical Publications</a></div>
             </div>
-
-            <!-- Source Card 3 -->
             <div class="bg-gaming-card border border-gaming-border rounded-xl p-6 hover:border-indigo-500/30 transition-all duration-300">
-                <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Donanım ve Espor Testleri</span>
-                <h3 class="text-lg font-bold text-white mt-2 mb-3 tech-font tracking-wide">Blurbusters High-Polling Rate Tests</h3>
-                <p class="text-sm text-slate-400 leading-relaxed mb-4">
+                <span class="text-xs font-bold uppercase tracking-wider text-emerald-400" data-i18n="source3-tag">Donanım ve Espor Testleri</span>
+                <h3 class="text-lg font-bold text-white mt-2 mb-3 tech-font tracking-wide" data-i18n="source3-title">Blurbusters High-Polling Rate Tests</h3>
+                <p class="text-sm text-slate-400 leading-relaxed mb-4" data-i18n="source3-desc">
                     1000 Hz, 4000 Hz ve 8000 Hz yenileme hızına sahip fare, klavye ve girdi aygıtlarının modern ve eski oyun motorlarındaki gecikme (input latency), işlemci yükü ve kare hızı dalgalanma testleri.
                 </p>
-                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wide" lang="en">Kaynak: <a href="https://blurbusters.com/faq/mouse-guide/" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition-colors">Blur Busters Research Labs</a></div>
+                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wide" lang="en"><span data-i18n="source-label">Kaynak</span>: <a href="https://blurbusters.com/faq/mouse-guide/" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition-colors" data-i18n="source3-link">Blur Busters Research Labs</a></div>
             </div>
-
-            <!-- Source Card 4 -->
             <div class="bg-gaming-card border border-gaming-border rounded-xl p-6 hover:border-indigo-500/30 transition-all duration-300">
-                <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Donanım Geliştiricileri</span>
-                <h3 class="text-lg font-bold text-white mt-2 mb-3 tech-font tracking-wide">Razer & Logitech Developer Guidelines</h3>
-                <p class="text-sm text-slate-400 leading-relaxed mb-4">
+                <span class="text-xs font-bold uppercase tracking-wider text-amber-400" data-i18n="source4-tag">Donanım Geliştiricileri</span>
+                <h3 class="text-lg font-bold text-white mt-2 mb-3 tech-font tracking-wide" data-i18n="source4-title">Razer & Logitech Developer Guidelines</h3>
+                <p class="text-sm text-slate-400 leading-relaxed mb-4" data-i18n="source4-desc">
                     Yüksek hızlı USB arabirimlerinin (xHCI Controllers) kesme istekleri (IRQ) yönetimi ve anakart veri yolları üzerinde donanımsal tıkanıklık oluşmasını engelleyen entegrasyon önerileri.
                 </p>
-                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wide" lang="en">Kaynak: <a href="https://www.razer.com/technology/razer-hyperpolling" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition-colors">Razer Developer Portal</a> / <a href="https://www.logitech.com/en-us/discover/a/polling-rate-on-a-mouse" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition-colors">Logitech G R&D</a></div>
+                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wide" lang="en"><span data-i18n="source-label">Kaynak</span>: <a href="https://www.razer.com/technology/razer-hyperpolling" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition-colors" data-i18n="source4-link1">Razer Developer Portal</a> / <a href="https://www.logitech.com/en-us/discover/a/polling-rate-on-a-mouse" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition-colors" data-i18n="source4-link2">Logitech G R&D</a></div>
             </div>
-
-            <!-- Source Card 5 -->
             <div class="bg-gaming-card border border-gaming-border rounded-xl p-6 hover:border-indigo-500/30 transition-all duration-300">
-                <span class="text-xs font-bold uppercase tracking-wider text-rose-400">Performans Analizi</span>
-                <h3 class="text-lg font-bold text-white mt-2 mb-3 tech-font tracking-wide">Digital Foundry Frame-Time Diagnostics</h3>
-                <p class="text-sm text-slate-400 leading-relaxed mb-4">
+                <span class="text-xs font-bold uppercase tracking-wider text-rose-400" data-i18n="source5-tag">Performans Analizi</span>
+                <h3 class="text-lg font-bold text-white mt-2 mb-3 tech-font tracking-wide" data-i18n="source5-title">Digital Foundry Frame-Time Diagnostics</h3>
+                <p class="text-sm text-slate-400 leading-relaxed mb-4" data-i18n="source5-desc">
                     Frostbite, RAGE ve Unreal Engine 4 mimarilerinin ağır fizik ve animasyon yükleri altında saniyede 8000 girdi sinyalini işlerken sergiledikleri "frame pacing" (kare zamanlaması) tutarsızlıkları.
                 </p>
-                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wide" lang="en">Kaynak: <a href="https://www.digitalfoundry.net" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition-colors">Digital Foundry</a> / <a href="https://www.eurogamer.net/topics/tech" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition-colors">Eurogamer Tech</a></div>
+                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wide" lang="en"><span data-i18n="source-label">Kaynak</span>: <a href="https://www.digitalfoundry.net" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition-colors" data-i18n="source5-link1">Digital Foundry</a> / <a href="https://www.eurogamer.net/topics/tech" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition-colors" data-i18n="source5-link2">Eurogamer Tech</a></div>
             </div>
-
-            <!-- Source Card 6 -->
             <div class="bg-gaming-card border border-gaming-border rounded-xl p-6 hover:border-indigo-500/30 transition-all duration-300">
-                <span class="text-xs font-bold uppercase tracking-wider text-cyan-400">Akademik Yayınlar</span>
-                <h3 class="text-lg font-bold text-white mt-2 mb-3 tech-font tracking-wide">Human-Computer Interaction in Esports</h3>
-                <p class="text-sm text-slate-400 leading-relaxed mb-4">
+                <span class="text-xs font-bold uppercase tracking-wider text-cyan-400" data-i18n="source6-tag">Akademik Yayınlar</span>
+                <h3 class="text-lg font-bold text-white mt-2 mb-3 tech-font tracking-wide" data-i18n="source6-title">Human-Computer Interaction in Esports</h3>
+                <p class="text-sm text-slate-400 leading-relaxed mb-4" data-i18n="source6-desc">
                     Kullanıcı hedef alma performansı ve insan motor becerilerinin 1 ms altındaki tepki süreleri ile olan ilişkisi üzerine yapılmış bilimsel gecikme ve doğruluk araştırmaları.
                 </p>
-                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wide" lang="en">Kaynak: <a href="https://transactions.games" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition-colors">IEEE Transactions on Games</a></div>
+                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wide" lang="en"><span data-i18n="source-label">Kaynak</span>: <a href="https://transactions.games" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 transition-colors" data-i18n="source6-link">IEEE Transactions on Games</a></div>
             </div>
         </div>
     </section>
@@ -408,7 +379,7 @@
             </div>
             <span class="text-lg font-bold tech-font tracking-wider text-slate-300">8000Hz ENGINE LABS</span>
         </div>
-        <p class="text-sm text-slate-500">
+        <p class="text-sm text-slate-500" data-i18n="footer-text">
             &copy; 2026 Girdi Uyumluluk Portalı. Tüm hakları saklıdır. Girdi analizleri çapraz teyitli olarak güncellenmektedir.
         </p>
     </div>
