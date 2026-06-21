@@ -85,7 +85,7 @@
         </nav>
         <div>
                 <span class="px-3 py-1 text-xs font-semibold uppercase tracking-wider text-indigo-400 bg-indigo-900/30 border border-indigo-500/30 rounded-full tech-font">
-                    v1.1 Kararlı Sürüm
+                    v1.1.0
                 </span>
         </div>
     </div>
@@ -99,7 +99,7 @@
             Donanım Gücün Sınırsız Olabilir, Peki <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500">Oyun Kodun</span> Hazır mı?
         </h1>
         <p class="text-lg text-slate-400 leading-relaxed mb-8">
-            8000Hz farelerin 0.125 ms zaman aralığındaki veri akışını işletim sisteminiz kaldırsa dahi, oyun motorunun iç kod mimarisi bu yoğunluğu sindiremeyebilir. İşte 30 oyunun motor düzeyinde kapsamlı testi.
+            8000Hz fare, klavye ve diğer girdi aygıtlarının 0.125 ms zaman aralığındaki veri akışını işletim sisteminiz kaldırsa dahi, oyun motorunun iç kod mimarisi bu yoğunluğu sindiremeyebilir. İşte 30 oyunun motor düzeyinde kapsamlı testi.
         </p>
         <div class="flex flex-wrap justify-center gap-4">
             <a href="#database" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg shadow-lg shadow-indigo-500/20 transition-all transform hover:-translate-y-0.5">
@@ -400,7 +400,7 @@
                 <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Donanım ve Espor Testleri</span>
                 <h3 class="text-lg font-bold text-white mt-2 mb-3 tech-font tracking-wide">Blurbusters High-Polling Rate Tests</h3>
                 <p class="text-sm text-slate-400 leading-relaxed mb-4">
-                    1000 Hz, 4000 Hz ve 8000 Hz yenileme hızına sahip farelerin modern ve eski oyun motorlarındaki gecikme (input latency), işlemci yükü ve kare hızı dalgalanma testleri.
+                    1000 Hz, 4000 Hz ve 8000 Hz yenileme hızına sahip fare, klavye ve girdi aygıtlarının modern ve eski oyun motorlarındaki gecikme (input latency), işlemci yükü ve kare hızı dalgalanma testleri.
                 </p>
                 <div class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Kaynak: Blur Busters Research Labs</div>
             </div>
@@ -1012,19 +1012,19 @@
             statusText.innerText = "GÜVENLİ (8000Hz ÇALIŞIR)";
             statusText.className = "text-xs font-bold uppercase text-gaming-success";
             progressBar.classList.add("bg-gaming-success");
-            feedback.innerHTML = `<strong>Mükemmel Kombinasyon!</strong> Seçtiğiniz oyun motoru ve API mimarisi, saniyede 8000 veri paketi işleme asenkron yapısına sahiptir. Güçlü işlemcinizle birlikte milisaniyelik takılmalar olmadan pürüzsüzce 8000Hz fare kullanabilirsiniz.`;
+            feedback.innerHTML = `<strong>Mükemmel Kombinasyon!</strong> Seçtiğiniz oyun motoru ve API mimarisi, saniyede 8000 veri paketi işleme asenkron yapısına sahiptir. Güçlü işlemcinizle birlikte milisaniyelik takılmalar olmadan pürüzsüzce 8000Hz girdi aygıtı kullanabilirsiniz.`;
         } else if (score >= 50) {
             statusDot.className = "w-2.5 h-2.5 rounded-full mr-2 bg-gaming-warning";
             statusText.innerText = "RİSKLİ (TAKILMALAR OLABİLİR)";
             statusText.className = "text-xs font-bold uppercase text-gaming-warning";
             progressBar.classList.add("bg-gaming-warning");
-            feedback.innerHTML = `<strong>Dikkatli Olun!</strong> Bu oyun mimarisinde 8000Hz veri akışı işlemcinizi veya oyun motorunun ana iş parçacığını zaman zaman darboğaza sokabilir. En pürüzsüz deneyim için farenizi <strong>2000Hz veya 4000Hz</strong> moduna çekmenizi öneririz.`;
+            feedback.innerHTML = `<strong>Dikkatli Olun!</strong> Bu oyun mimarisinde 8000Hz veri akışı işlemcinizi veya oyun motorunun ana iş parçacığını zaman zaman darboğaza sokabilir. En pürüzsüz deneyim için girdi aygıtınızı <strong>2000Hz veya 4000Hz</strong> moduna çekmenizi öneririz.`;
         } else {
             statusDot.className = "w-2.5 h-2.5 rounded-full mr-2 bg-gaming-danger";
             statusText.innerText = "UYUMSUZ (1000Hz ŞART)";
             statusText.className = "text-xs font-bold uppercase text-gaming-danger";
             progressBar.classList.add("bg-gaming-danger");
-            feedback.innerHTML = `<strong>Tavsiye Edilmez!</strong> Oyun motoru girdi döngüsü doğrudan kilitli veya eski kütüphanelerle çalışıyor. 8000Hz fareniz kamerada ağır titremelere, FPS droplarına ve anlık donmalara sebep olur. Lütfen fare ayarlarınızdan polling değerini <strong>1000Hz</strong>'e sabitleyin.`;
+            feedback.innerHTML = `<strong>Tavsiye Edilmez!</strong> Oyun motoru girdi döngüsü doğrudan kilitli veya eski kütüphanelerle çalışıyor. 8000Hz girdi aygıtınız kamerada ağır titremelere, FPS droplarına ve anlık donmalara sebep olur. Lütfen girdi aygıtı ayarlarınızdan polling değerini <strong>1000Hz</strong>'e sabitleyin.`;
         }
     }
 

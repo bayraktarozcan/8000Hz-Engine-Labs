@@ -1,3 +1,41 @@
+Intelligence/
+
+# IDE
 .idea/
 *.iml
 modules.xml
+.vs/
+.vscode/
+*.suo
+*.user
+*.sln.docstates
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Dependabot log (workflow managed, not committed directly)
+dependabot-log.md
+
+# Config (live system paths — templates exempt)
+Config/
+!Config/*.template.*
+
+# Sensitive data
+.env
+.env.*
+*.key
+*.pem
+*.cert
+token*
+secret*
+
+# Build output
+build/
+dist/
+bin/
+obj/
+*.pyc
+__pycache__/
+node_modules/
+target/
