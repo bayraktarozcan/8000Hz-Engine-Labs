@@ -5,7 +5,7 @@
 ## Özellikler
 
 - **Oyun Veritabanı:** 30 oyunun girdi aygıtı uyumluluk durumu (Native, Unity, Unreal, Custom motorları)
-- **Diagnostik Testler:** Polling rate, DPI, click latency, sensor tracking doğrulama
+- **Diagnostik Testler:** Polling rate, DPI/CPI, click/key latency, sensor/tracking doğrulama, tuş/eksen tepki süresi
 - **Uyumluluk Durumları:** Tam uyumlu, kısmi uyumlu, uyumsuz, test edilmedi
 
 ## Kullanım

@@ -1,0 +1,13 @@
+{
+    "name": "8000hz-engine-labs",
+    "version": "1.1.0",
+    "description": "8000Hz Oyun Motoru Uyumluluk Portalı - Fare/klavye/girdi aygıtı polling rate test ve analiz aracı",
+    "private": true,
+    "scripts": {
+        "dev": "serve .",
+        "start": "serve ."
+    },
+    "devDependencies": {
+        "serve": "^14.2.0"
+    }
+}
