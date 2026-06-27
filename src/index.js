@@ -175,6 +175,12 @@ const translations = {
 };
 
 let currentLang = localStorage.getItem('8000hz-lang') || 'tr';
+let searchTimeout;
+
+function debouncedFilter() {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(filterGames, 200);
+}
 
 function switchLanguage(lang) {
     if (lang) { currentLang = lang; }
@@ -682,8 +688,6 @@ const games = [
     }
 ];
 
-let filteredGamesCache = games;
-
 window.onscroll = function () {
     const btn = document.getElementById("back-to-top");
     if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
@@ -695,14 +699,6 @@ window.onscroll = function () {
 
 function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function g(key) {
-    if (currentLang === 'en') {
-        const enKey = key + 'En';
-        return this[enKey] || this[key];
-    }
-    return this[key];
 }
 
 function calculateAndRenderMetrics() {
@@ -723,7 +719,6 @@ function calculateAndRenderMetrics() {
 }
 
 function renderGames(gamesList) {
-    filteredGamesCache = gamesList;
     const grid = document.getElementById("games-grid");
     const emptyState = document.getElementById("empty-state");
     grid.innerHTML = "";
@@ -755,7 +750,7 @@ function renderGames(gamesList) {
         const gAnalysis = isEn ? (game.analysisEn || game.analysis) : game.analysis;
 
         const card = document.createElement("div");
-        card.className = "bg-gaming-card border border-gaming-border rounded-xl p-5 flex flex-col justify-between hover:border-indigo-500/30 transition-all duration-300 relative group";
+        card.className = "bg-gaming-card border border-gaming-border rounded-xl p-5 flex flex-col justify-between hover:border-indigo-500/30 transition-all duration-300 relative group fade-in-card";
         card.innerHTML = `
                     <div>
                         <div class="flex items-start justify-between mb-4">
@@ -823,10 +818,7 @@ function filterGames() {
 
         const matchesStatus = statusValue === "all" || game.status === statusValue;
 
-        let matchesEngine = true;
-        if (engineValue !== "all") {
-            matchesEngine = game.tag === engineValue;
-        }
+        const matchesEngine = engineValue === "all" || game.tag === engineValue;
 
         return matchesSearch && matchesStatus && matchesEngine;
     });

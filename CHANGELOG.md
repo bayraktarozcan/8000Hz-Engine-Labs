@@ -28,6 +28,31 @@
 
 ---
 
+### v1.3.0 — 2026-06-27
+
+#### Added
+- **OLED dark theme**: Scan-line CRT overlay, dot-grid background, neon-pulse keyframes (4 color variants), glitch-text hover animation, gradient-border card effect, float particle animation, fade-in-card staggered animation, vignette overlay, text-glow utility classes
+- **Debounced search**: 200ms debounce on search input to reduce re-filter calls during typing
+- **GitHub community files**: Issue templates (bug report, feature request), pull request template, contributing guidelines (CONTRIBUTING.md), and code of conduct (CODE_OF_CONDUCT.md)
+- **Workflow enhancements**: `workflow_dispatch` manual trigger and concurrency group on pages.yml; artifact retention set to 7 days
+
+#### Changed
+- **Hero heading**: Added `.glitch-text` hover effect with `data-text` attribute for glitch animation
+- **Search input**: Bound to `debouncedFilter()` instead of raw `filterGames()` for performance
+- **Game cards**: Assigned `.fade-in-card` class for staggered entrance animation
+
+#### Fixed
+- **Dead code removal**: Removed unused `g()` global helper function and `filteredGamesCache` variable (written but never read)
+- **Simplified boolean logic**: Consolidated redundant `let` + `if` pattern in `matchesEngine` into single expression
+- **CSS**: No bugs found — `.md\:grid-cols-4` class verified present at line 323
+
+#### Infrastructure
+- **Pages workflow**: Manual trigger (`workflow_dispatch`) available for ad-hoc deploys
+- **Concurrency**: `cancel-in-progress: true` to auto-cancel stale workflow runs
+- **Artifact retention**: Reduced from 90 to 7 days
+
+---
+
 ### v1.2.1 — 2026-06-21
 
 #### Changed
@@ -129,8 +154,7 @@ Initial release.
 
 | Version | Goal |
 |---|---|
-| v1.3.0 | Graphical polling rate test tool (real-time), Community-contributed game database |
-| v2.0.0 | User theme preferences, expanded diagnostic tool |
+| v2.0.0 | Graphical polling rate test tool (real-time), Community-contributed game database |
 
 ---
 
@@ -139,6 +163,31 @@ Initial release.
 ## TR Türkçe Değişiklik Günlüğü
 
 > Biçim: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
+
+---
+
+### v1.3.0 — 2026-06-27
+
+#### Eklenenler
+- **OLED karanlık tema**: CRT tarama-çizgisi katmanı, nokta-grid arka plan, neon-pulse anahtar kareleri (4 renk varyantı), glitch-text fare üstü animasyonu, gradyan-border kart efekti, float parçacık animasyonu, fade-in-card sıralı giriş animasyonu, karartma (vignette) katmanı, text-glow yardımcı sınıfları
+- **Debounce'lu arama**: 200ms gecikmeli arama girişi ile her tuş vuruşunda gereksiz filtreleme çağrılarının önlenmesi
+- **GitHub topluluk dosyaları**: Hata raporu ve özellik talebi şablonları, pull request şablonu, katkı rehberi (CONTRIBUTING.md) ve davranış kuralları (CODE_OF_CONDUCT.md)
+- **Workflow iyileştirmeleri**: pages.yml'e `workflow_dispatch` manuel tetikleyici ve concurrency grubu eklendi; yapıt saklama süresi 7 güne düşürüldü
+
+#### Değişenler
+- **Hero başlığı**: `.glitch-text` hover efekti ve `data-text` özelliği eklendi
+- **Arama girişi**: Performans için `filterGames()` yerine `debouncedFilter()`'a bağlandı
+- **Oyun kartları**: Sıralı giriş animasyonu için `.fade-in-card` sınıfı eklendi
+
+#### Düzeltmeler
+- **Ölü kod temizliği**: Kullanılmayan `g()` global helper fonksiyonu ve `filteredGamesCache` değişkeni (yazılıyor ama hiç okunmuyor) kaldırıldı
+- **Boolean mantık sadeleştirmesi**: `matchesEngine`'deki gereksiz `let` + `if` kalıbı tek ifadeye indirgendi
+- **CSS**: Hata bulunamadı — `.md\:grid-cols-4` sınıfının 323. satırda mevcut olduğu doğrulandı
+
+#### Altyapı
+- **Pages workflow**: Manuel tetikleyici (`workflow_dispatch`) ile anlık deploy imkanı
+- **Concurrency**: Eski workflow'ları otomatik iptal etmek için `cancel-in-progress: true`
+- **Yapıt saklama süresi**: 90 günden 7 güne düşürüldü
 
 ---
 
@@ -243,5 +292,4 @@ Initial release.
 
 | Sürüm | Hedef |
 |---|---|
-| v1.3.0 | Grafiksel polling rate test aracı (gerçek zamanlı), Community katkılı oyun veritabanı |
-| v2.0.0 | Kullanıcı tema tercihleri, genişletilmiş diagnostik araç |
+| v2.0.0 | Grafiksel polling rate test aracı (gerçek zamanlı), Community katkılı oyun veritabanı |

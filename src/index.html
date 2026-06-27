@@ -7,7 +7,9 @@
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="text-slate-100 antialiased overflow-x-hidden">
+<body class="text-slate-100 antialiased overflow-x-hidden gpu-accelerate">
+
+<div class="scan-line"></div>
 
 <!-- Glowing Background Highlights -->
 <div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
@@ -39,17 +41,17 @@
                 EN
             </button>
             <span class="px-3 py-1 text-xs font-semibold uppercase tracking-wider text-indigo-400 bg-indigo-900/30 border border-indigo-500/30 rounded-full tech-font">
-                v1.2.1
+                v1.3.0
             </span>
         </div>
     </div>
 </header>
 
-<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative">
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative dot-grid-bg-sm">
 
     <!-- Hero Section -->
     <div class="text-center py-12 md:py-20 max-w-3xl mx-auto">
-        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight tech-font mb-6 leading-none" data-i18n="hero-title">
+        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight tech-font mb-6 leading-none glitch-text text-glow-indigo" data-i18n="hero-title" data-text="Donanım Gücün Sınırsız Olabilir, Peki Oyun Kodun Hazır mı?">
             Donanım Gücün Sınırsız Olabilir, Peki <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500">Oyun Kodun</span> Hazır mı?
         </h1>
         <p class="text-lg text-slate-400 leading-relaxed mb-8" data-i18n="hero-desc">
@@ -165,7 +167,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </span>
-                    <input type="text" id="search-input" oninput="filterGames()" data-i18n-placeholder="db-search-placeholder" placeholder="Oyun adı, motor veya API ara..." class="w-full pl-10 pr-4 py-3 bg-gaming-dark border border-gaming-border rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-indigo-500 transition-colors">
+                    <input type="text" id="search-input" oninput="debouncedFilter()" data-i18n-placeholder="db-search-placeholder" placeholder="Oyun adı, motor veya API ara..." class="w-full pl-10 pr-4 py-3 bg-gaming-dark border border-gaming-border rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-indigo-500 transition-colors">
                 </div>
                 <div>
                     <select id="status-filter" onchange="filterGames()" class="w-full px-4 py-3 bg-gaming-dark border border-gaming-border rounded-lg text-slate-300 focus:outline-none focus:border-indigo-500 transition-colors">
