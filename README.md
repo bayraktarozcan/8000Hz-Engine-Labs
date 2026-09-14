@@ -87,29 +87,29 @@ Live: **[bayraktarozcan.github.io/8000Hz-Engine-Labs](https://bayraktarozcan.git
 | 7 | Chivalry 2 | Unreal Engine 4 | ❌ Incompatible |
 | 8 | Counter-Strike 2 | Source 2 | ✅ Compatible |
 | 9 | Euro Truck Simulator 2 | Prism3D | ❌ Incompatible |
-| 10 | F1 22 | EGO Engine 4.0 | ❌ Incompatible |
+| 10 | F1 22 | EGO Engine | ❌ Incompatible |
 | 11 | Farming Simulator 22 | GIANTS Engine 9 | ❌ Incompatible |
 | 12 | Forza Horizon 5 | Forzatech | ✅ Compatible |
 | 13 | Ghostrunner | Unreal Engine 4 | ⚠️ Partial |
 | 14 | Grand Theft Auto V Enhanced | RAGE | ❌ Incompatible |
 | 15 | Insurgency: Sandstorm | Unreal Engine 4 | ❌ Incompatible |
-| 16 | Mafia: Definitive Edition | Illusion Engine | ❌ Incompatible |
+| 16 | Mafia: Definitive Edition | Fusion Engine | ❌ Incompatible |
 | 17 | Mafia II: Definitive Edition | Illusion Engine | ❌ Incompatible |
 | 18 | Metro 2033 Redux | 4A Engine (Legacy) | ❌ Incompatible |
 | 19 | Metro Exodus Enhanced Edition | 4A Engine (Modern) | ⚠️ Partial |
 | 20 | Metro: Last Light Redux | 4A Engine (Legacy) | ❌ Incompatible |
 | 21 | Mount & Blade II: Bannerlord | TaleWorlds Custom | ❌ Incompatible |
-| 22 | Need for Speed Unbound | Frostbite (Modern) | ✅ Compatible |
-| 23 | PAYDAY 3 | Unreal Engine 4 | ❌ Incompatible |
-| 24 | Ready or Not | Unreal Engine 5.x | ❌ Incompatible |
+| 22 | Need for Speed Unbound | Frostbite (Modern) | ⚠️ Partial |
+| 23 | PAYDAY 3 | Unreal Engine 4 → 5 (3.8) | ❌ Incompatible |
+| 24 | Ready or Not | Unreal Engine 5.3 | ❌ Incompatible |
 | 25 | Red Dead Online | RAGE (Modern) | ⚠️ Partial |
 | 26 | Squad — Public Testing | Unreal Engine 5.7 | ❌ Incompatible |
 | 27 | Squad | Unreal Engine 5.7 | ❌ Incompatible |
-| 28 | The Long Dark | Unity (Legacy) | ❌ Incompatible |
+| 28 | The Long Dark | Unity 6 | ❌ Incompatible |
 | 29 | World War Z | Swarm Engine | ✅ Compatible |
-| 30 | Zero Hour | Unity (Modern) | ❌ Incompatible |
+| 30 | Zero Hour | Unity | ❌ Incompatible |
 
-**Distribution**: 7 Compatible · 6 Partial · 17 Incompatible
+**Distribution**: 3 Compatible · 7 Partial · 20 Incompatible
 
 ---
 
@@ -138,7 +138,7 @@ The interactive test tool at the bottom of the portal calculates an estimated co
 3. **Engine Architecture**: Modern async / Unreal Engine 4/5 / Unity / Legacy custom engines
 4. **Graphics API**: DX12/Vulkan vs. DX11/DX9
 
-Score range: 0–100. 80+ "Safe", 50–79 "Risky", <50 "Incompatible".
+Score range: 25–100 (minimum 25 with weakest combination). 80+ "Safe", 50–79 "Risky", <50 "Incompatible".
 
 > **Warning**: This test produces an estimated stability result based on the selected game engine's input database library. Actual results may vary depending on background applications.
 
@@ -201,7 +201,7 @@ Dependabot was opening PRs for GitHub Actions dependencies (`checkout`, `upload-
 ├── src/
 │   ├── assets/
 │   │   ├── css/
-│   │   │   └── style.css               # All styles (~520 lines, OLED-enhanced)
+│   │   │   └── style.css               # All styles (~610 lines, OLED-enhanced)
 │   │   └── favicon.svg                 # I/O themed SVG favicon
 │   ├── index.html                      # Main app page (TR/EN)
 │   └── index.js                        # Game database + JS logic (TR/EN)
@@ -266,8 +266,8 @@ Pull requests do not trigger automatic deployment; only pushes to the `main` bra
 | Component | Technology |
 |---|---|
 | Markup | HTML5 (`lang="tr"`/`lang="en"`, semantic HTML5) |
-| Style | Custom CSS (Tailwind-esque utility classes, OLED-enhanced, ~520 lines) |
-| JavaScript | Vanilla JS (ES6+, 0 dependencies, ~920 lines) |
+| Style | Custom CSS (Tailwind-esque utility classes, OLED-enhanced, ~610 lines) |
+| JavaScript | Vanilla JS (ES6+, 0 dependencies, ~960 lines) |
 | Icon | SVG (custom I/O design) |
 | Hosting | GitHub Pages (Actions deploy) |
 | Local server | `serve` (npm, optional) |
@@ -368,29 +368,29 @@ Canlı: **[bayraktarozcan.github.io/8000Hz-Engine-Labs](https://bayraktarozcan.g
 | 7 | Chivalry 2 | Unreal Engine 4 | ❌ Uyumsuz |
 | 8 | Counter-Strike 2 | Source 2 | ✅ Tam |
 | 9 | Euro Truck Simulator 2 | Prism3D | ❌ Uyumsuz |
-| 10 | F1 22 | EGO Engine 4.0 | ❌ Uyumsuz |
+| 10 | F1 22 | EGO Engine | ❌ Uyumsuz |
 | 11 | Farming Simulator 22 | GIANTS Engine 9 | ❌ Uyumsuz |
 | 12 | Forza Horizon 5 | Forzatech | ✅ Tam |
 | 13 | Ghostrunner | Unreal Engine 4 | ⚠️ Kısmi |
 | 14 | Grand Theft Auto V Enhanced | RAGE | ❌ Uyumsuz |
 | 15 | Insurgency: Sandstorm | Unreal Engine 4 | ❌ Uyumsuz |
-| 16 | Mafia: Definitive Edition | Illusion Engine | ❌ Uyumsuz |
+| 16 | Mafia: Definitive Edition | Fusion Engine | ❌ Uyumsuz |
 | 17 | Mafia II: Definitive Edition | Illusion Engine | ❌ Uyumsuz |
 | 18 | Metro 2033 Redux | 4A Engine (Eski) | ❌ Uyumsuz |
 | 19 | Metro Exodus Enhanced Edition | 4A Engine (Modern) | ⚠️ Kısmi |
 | 20 | Metro: Last Light Redux | 4A Engine (Eski) | ❌ Uyumsuz |
 | 21 | Mount & Blade II: Bannerlord | TaleWorlds Custom | ❌ Uyumsuz |
-| 22 | Need for Speed Unbound | Frostbite (Modern) | ✅ Tam |
-| 23 | PAYDAY 3 | Unreal Engine 4 | ❌ Uyumsuz |
-| 24 | Ready or Not | Unreal Engine 5.x | ❌ Uyumsuz |
+| 22 | Need for Speed Unbound | Frostbite (Modern) | ⚠️ Kısmi |
+| 23 | PAYDAY 3 | Unreal Engine 4 → 5 (3.8) | ❌ Uyumsuz |
+| 24 | Ready or Not | Unreal Engine 5.3 | ❌ Uyumsuz |
 | 25 | Red Dead Online | RAGE (Modern) | ⚠️ Kısmi |
 | 26 | Squad — Public Testing | Unreal Engine 5.7 | ❌ Uyumsuz |
 | 27 | Squad | Unreal Engine 5.7 | ❌ Uyumsuz |
-| 28 | The Long Dark | Unity (Eski) | ❌ Uyumsuz |
+| 28 | The Long Dark | Unity 6 | ❌ Uyumsuz |
 | 29 | World War Z | Swarm Engine | ✅ Tam |
-| 30 | Zero Hour | Unity (Modern) | ❌ Uyumsuz |
+| 30 | Zero Hour | Unity | ❌ Uyumsuz |
 
-**Dağılım**: 7 Tam uyumlu · 6 Kısmi uyumlu · 17 Uyumsuz
+**Dağılım**: 3 Tam uyumlu · 7 Kısmi uyumlu · 20 Uyumsuz
 
 ---
 
@@ -419,7 +419,7 @@ Portalın alt kısmında bulunan etkileşimli test aracı, 4 parametreye göre t
 3. **Motor Mimarisi**: Modern asenkron / Unreal Engine 4/5 / Unity / Özel eski motorlar
 4. **Grafik API'si**: DX12/Vulkan vs. DX11/DX9
 
-Puan aralığı: 0–100. 80+ "Güvenli", 50–79 "Riskli", <50 "Uyumsuz".
+Puan aralığı: 25–100 (en zayıf kombinasyonda minimum 25). 80+ "Güvenli", 50–79 "Riskli", <50 "Uyumsuz".
 
 > **Uyarı**: Bu test, seçilen oyun motorunun girdi veri tabanı kütüphanesini baz alarak tahmini bir veri stabilizasyonu sonucu üretir. Gerçek sonuçlar arka plan uygulamalarına bağlı olarak değişiklik gösterebilir.
 
@@ -482,7 +482,7 @@ GitHub Actions bağımlılıkları (`checkout`, `upload-pages-artifact`, vb.) i�
 ├── src/
 │   ├── assets/
 │   │   ├── css/
-│   │   │   └── style.css               # Tüm stiller (~520 satır, OLED geliştirmeli)
+│   │   │   └── style.css               # Tüm stiller (~610 satır, OLED geliştirmeli)
 │   │   └── favicon.svg                 # I/O temalı SVG favicon
 │   ├── index.html                      # Ana uygulama sayfası (TR/EN)
 │   └── index.js                        # Oyun veritabanı + JS mantığı (TR/EN)
@@ -547,8 +547,8 @@ Pull request'ler otomatik deploy tetiklemez; yalnızca `main` branch'ine push'la
 | Bileşen | Teknoloji |
 |---|---|
 | İşaretleme | HTML5 (`lang="tr"`/`lang="en"`, semantic HTML5) |
-| Stil | Özel CSS (Tailwind-eske utility sınıfları, OLED geliştirmeli, ~520 satır) |
-| JavaScript | Vanilla JS (ES6+, 0 bağımlılık, ~920 satır) |
+| Stil | Özel CSS (Tailwind-eske utility sınıfları, OLED geliştirmeli, ~610 satır) |
+| JavaScript | Vanilla JS (ES6+, 0 bağımlılık, ~960 satır) |
 | İkon | SVG (I/O temalı özel tasarım) |
 | Barındırma | GitHub Pages (Actions ile deploy) |
 | Yerel sunucu | `serve` (npm, isteğe bağlı) |

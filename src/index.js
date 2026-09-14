@@ -152,6 +152,7 @@ const translations = {
         'source2-desc': 'Analysis of the new input layer in Counter-Strike 2 that asynchronously decouples input polling rate from frame rate and processes sub-tick movement data without loss.',
         'source2-link': 'Valve Corporation Technical Publications',
         'source3-tag': 'Hardware & Esports Tests',
+        'source3-title': 'Blurbusters High-Polling Rate Tests',
         'source3-desc': 'Latency, CPU load and frame time fluctuation tests of 1000 Hz, 4000 Hz and 8000 Hz mice, keyboards and input devices across modern and legacy game engines.',
         'source3-link': 'Blur Busters Research Labs',
         'source4-tag': 'Hardware Developers',
@@ -174,8 +175,21 @@ const translations = {
     }
 };
 
-let currentLang = localStorage.getItem('8000hz-lang') || 'tr';
+function safeGetLang() {
+    try { return localStorage.getItem('8000hz-lang') || 'tr'; }
+    catch (e) { return 'tr'; }
+}
+
+function safeSetLang(value) {
+    try { localStorage.setItem('8000hz-lang', value); }
+    catch (e) { /* private mode / file:// : tercih kalıcı olmaz, sessiyonda devam et */ }
+}
+
+let currentLang = safeGetLang();
+if (currentLang !== 'tr' && currentLang !== 'en') { currentLang = 'tr'; }
 let searchTimeout;
+let diagInterval = null;
+let filteredGamesCache = null;
 
 function debouncedFilter() {
     clearTimeout(searchTimeout);
@@ -185,22 +199,24 @@ function debouncedFilter() {
 function switchLanguage(lang) {
     if (lang) { currentLang = lang; }
     else { currentLang = currentLang === 'tr' ? 'en' : 'tr'; }
-    localStorage.setItem('8000hz-lang', currentLang);
-    document.documentElement.lang = currentLang;
-    document.getElementById('lang-toggle').textContent = currentLang === 'tr' ? 'EN' : 'TR';
+    safeSetLang(currentLang);
+    if (document.documentElement) { document.documentElement.lang = currentLang; }
+    const toggle = document.getElementById('lang-toggle');
+    if (toggle) { toggle.textContent = currentLang === 'tr' ? 'EN' : 'TR'; }
     applyTranslations();
-    renderGames(filteredGamesCache);
+    filterGames();
 }
 
 function applyTranslations() {
+    const dict = translations[currentLang] || translations.tr;
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        let text = translations[currentLang][key];
+        const text = dict[key];
         if (text !== undefined) { el.innerHTML = text; }
     });
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
         const key = el.getAttribute('data-i18n-placeholder');
-        let text = translations[currentLang][key];
+        const text = dict[key];
         if (text !== undefined) { el.placeholder = text; }
     });
 }
@@ -354,8 +370,8 @@ const games = [
         id: 10,
         name: "F1 22",
         nameEn: "F1 22",
-        engine: "EGO Engine 4.0 (Codemasters)",
-        engineEn: "EGO Engine 4.0 (Codemasters)",
+        engine: "EGO Engine (Codemasters)",
+        engineEn: "EGO Engine (Codemasters)",
         api: "Low-Pass Filtered Controller Input",
         apiEn: "Low-Pass Filtered Controller Input",
         status: "incompatible",
@@ -386,16 +402,16 @@ const games = [
         id: 12,
         name: "Forza Horizon 5",
         nameEn: "Forza Horizon 5",
-        engine: "Forzatech (Modern DX12 / UWP Mimarisi)",
-        engineEn: "Forzatech (Modern DX12 / UWP Architecture)",
-        api: "Asynchronous UWP Windows API Input",
-        apiEn: "Asynchronous UWP Windows API Input",
+        engine: "Forzatech (Modern DX12)",
+        engineEn: "Forzatech (Modern DX12)",
+        api: "Asynchronous Windows API Input (MS Store'da UWP / Steam'de Win32)",
+        apiEn: "Asynchronous Windows API Input (UWP on MS Store / Win32 on Steam)",
         status: "compatible",
         statusText: "Tamamen Uyumlu",
         statusTextEn: "Fully Compatible",
         badgeColor: "bg-gaming-success/10 border-gaming-success/30 text-gaming-success",
-        analysis: "Forzatech, asenkron girdi kütüphaneleriyle yazılmıştır. 8000Hz girdi, motor düzeyinde kararlılık veya performans kaybına yol açmaz. Fare sadece kabin içi veya harita görünümünü kontrol ettiğinden oyun deneyimine doğrudan bir nişan alma etkisi olmasa da, motor bu veri yükünü kusursuzca sindirir.",
-        analysisEn: "Forzatech is built with asynchronous input libraries. 8000Hz input does not cause engine-level stability or performance loss. While the mouse only controls cabin or map view (no direct aiming impact), the engine digests this data load flawlessly.",
+        analysis: "Forzatech, asenkron girdi kütüphaneleriyle yazılmıştır. Oyuna özgü 8000Hz sorunu rapor edilmemiştir; modern motor mimarisi 8000Hz yükünü kaldırmaya yatkındır. Fare yalnızca kabin içi/harita görünümünü etkiler. MS Store sürümü UWP paketi, Steam sürümü Win32'dir.",
+        analysisEn: "Forzatech is built with asynchronous input libraries. No game-specific 8000Hz issue is reported; the modern architecture is suited to 8000Hz load. The mouse only affects cabin/map view. The MS Store build is a UWP package, the Steam build is Win32.",
         tag: "other"
     },
     {
@@ -426,8 +442,8 @@ const games = [
         statusText: "Kesinlikle Uyumsuz",
         statusTextEn: "Strictly Incompatible",
         badgeColor: "bg-gaming-danger/10 border-gaming-danger/30 text-gaming-danger",
-        analysis: "RAGE motorunun PC sürümü güncellenmiş olsa da temelinde 2013 girdi kütüphanelerini barındırır. GTA V, 1000Hz üzerindeki polling değerlerinde kronik motor hatalarına sahiptir. Farenizi 8000Hz moduna aldığınızda kamerayı çevirmek imkansız hale gelebilir, hassasiyet aşırı düşebilir veya oyun slayt gösterisine dönebilir (FPS tek hanelere düşer).",
-        analysisEn: "Although the PC version of the RAGE engine has been updated, it still fundamentally uses 2013-era input libraries. GTA V has chronic engine bugs at polling rates above 1000Hz. At 8000Hz, turning the camera can become impossible, sensitivity may drop drastically, or the game may turn into a slideshow (FPS drops to single digits). Steam Community discussions confirm these issues persist in the Enhanced Edition.",
+        analysis: "RAGE motorunun PC sürümü güncellenmiş olsa da temelinde eski girdi kütüphaneleri barındırır. GTA V, 1000Hz üzerindeki polling değerlerinde kronik girdi sorunlarına sahiptir (Steam Community tartışmaları Enhanced Edition'da da sürmektedir). 8000Hz'de kamera titremesi, hassasiyet dalgalanması ve ağır takılmalar görülebilir; 1000Hz önerilir.",
+        analysisEn: "Although the PC version of the RAGE engine has been updated, it retains legacy input libraries. GTA V has chronic input issues above 1000Hz polling (Steam Community discussions confirm they persist in the Enhanced Edition). At 8000Hz, camera jitter, sensitivity fluctuation and heavy stuttering may occur; 1000Hz is recommended.",
         tag: "rage"
     },
     {
@@ -442,24 +458,24 @@ const games = [
         statusText: "Kesinlikle Uyumsuz",
         statusTextEn: "Strictly Incompatible",
         badgeColor: "bg-gaming-danger/10 border-gaming-danger/30 text-gaming-danger",
-        analysis: "Sandstorm, UE4 motorunun optimizasyon ve iş parçacığı dağıtımı açısından en sorunlu yapılandırıldığı oyunlardan biridir. Ana iş parçacığı sürekli sınırda çalıştığından, 8000Hz farenin ürettiği yoğun veri akışı ana iş parçacığındaki işlem yükünü kaldırabileceği limitlerin üzerine çıkarır ve ağır takılmalar yaşatır. Geliştirici onayı: 4000Hz çalışır, 8000Hz donar.",
-        analysisEn: "Sandstorm is one of the most problematically configured UE4 engine titles in terms of optimization and thread distribution. With the main thread constantly running at capacity, the intense data stream from an 8000Hz mouse pushes it beyond its limits, causing severe stuttering. Developer confirmed: works at 4000Hz, freezes at 8000Hz.",
+        analysis: "Sandstorm, UE4 motorunun optimizasyon ve iş parçacığı dağıtımı açısından en sorunlu yapılandırıldığı oyunlardan biridir. Ana iş parçacığı sürekli sınırda çalıştığından, 8000Hz farenin ürettiği yoğun veri akışı işlem yükünü limitlerin üzerine çıkarır ve ağır takılmalar yaşatabilir. Topluluk raporları yüksek polling'de takılma bildirir; oyuna özgü 8000Hz ölçümü bulunmamaktadır.",
+        analysisEn: "Sandstorm is one of the most problematically configured UE4 titles for optimization and thread distribution. With the main thread often at capacity, the intense 8000Hz data stream can push it beyond its limits and cause severe stuttering. Community reports describe stutter at high polling; no game-specific 8000Hz measurement exists.",
         tag: "unreal"
     },
     {
         id: 16,
         name: "Mafia Definitive Edition",
         nameEn: "Mafia Definitive Edition",
-        engine: "Illusion Engine",
-        engineEn: "Illusion Engine",
+        engine: "Fusion Engine (Hangar 13 / Mafia III motoru)",
+        engineEn: "Fusion Engine (Hangar 13 / Mafia III engine)",
         api: "Frame-Locked Tick Rate Input",
         apiEn: "Frame-Locked Tick Rate Input",
         status: "incompatible",
         statusText: "Kesinlikle Uyumsuz",
         statusTextEn: "Strictly Incompatible",
         badgeColor: "bg-gaming-danger/10 border-gaming-danger/30 text-gaming-danger",
-        analysis: "Illusion Engine, girdi verilerini motorun dahili 'tick' sürelerine göre (sabit zaman aralıklarında) ölçeklendirir. 8000Hz'den gelen 0.125 ms hassasiyetindeki koordinatlar, matematiksel yuvarlama algoritmalarını şaşırtır. Fareyi çevirirken kamera pürüzsüz dönmek yerine titreme (camera judder) yapar.",
-        analysisEn: "The Illusion Engine scales input data according to the engine's internal tick rates (fixed time intervals). Coordinates with 0.125ms precision from 8000Hz confuse the mathematical rounding algorithms. Instead of smooth rotation, the camera exhibits judder when turning the mouse.",
+        analysis: "Mafia Definitive Edition, Mafia II'nin Illusion Engine çekirdeğinden evrilen Hangar 13 Fusion Engine (Mafia III motoru) ile sıfırdan hazırlanmıştır. Girdi verileri motorun dahili 'tick' sürelerine göre (sabit zaman aralıklarında) ölçeklenir. 8000Hz'den gelen 0.125 ms hassasiyetindeki koordinatlar yuvarlama hatalarına ve kamerada titremeye (camera judder) yol açabilir. Oyuna özgü 8000Hz ölçümü bulunmamaktadır; sınıflandırma eski mimariye dayalı ihtiyatlı değerlendirmedir.",
+        analysisEn: "Mafia Definitive Edition was rebuilt on Hangar 13's Fusion Engine (the Mafia III engine), evolved from Mafia II's Illusion core. Input data is scaled to the engine's internal tick rates (fixed intervals). 0.125ms coordinates from 8000Hz can cause rounding errors and camera judder. No game-specific 8000Hz measurement exists; the classification is a precautionary assessment based on the legacy architecture.",
         tag: "other"
     },
     {
@@ -474,8 +490,8 @@ const games = [
         statusText: "Kesinlikle Uyumsuz",
         statusTextEn: "Strictly Incompatible",
         badgeColor: "bg-gaming-danger/10 border-gaming-danger/30 text-gaming-danger",
-        analysis: "İlkiyle tamamen aynı Illusion Engine girdi yapısını barındırır. 0.125 ms gibi çok dar bir zaman aralığındaki veriler fizik matrisleriyle uyuşmaz, bu da kamerada mikro titremeler ve tutarsız bir nişangah hareket algısı yaratır.",
-        analysisEn: "Uses the exact same Illusion Engine input architecture as the first game. Data within a 0.125ms time window conflicts with physics matrices, creating micro-jitter in the camera and an inconsistent crosshair movement perception.",
+        analysis: "Mafia II Definitive Edition, orijinal Mafia II'nin Illusion Engine çekirdeğini korur (Mafia Definitive Edition'daki Fusion yeniden yapımından farklıdır). 0.125 ms gibi çok dar bir zaman aralığındaki veriler fizik matrisleriyle uyuşmaz, bu da kamerada mikro titremeler ve tutarsız bir nişangah hareket algısı yaratabilir. Oyuna özgü 8000Hz ölçümü bulunmamaktadır.",
+        analysisEn: "Mafia II Definitive Edition retains the original Mafia II Illusion Engine core (unlike the Fusion rebuild in Mafia Definitive Edition). Data within a 0.125ms window conflicts with physics matrices, which can create camera micro-jitter and inconsistent crosshair feel. No game-specific 8000Hz measurement exists.",
         tag: "other"
     },
     {
@@ -550,44 +566,44 @@ const games = [
         engineEn: "Frostbite (Modern Version)",
         api: "Modern Asynchronous Raw Input",
         apiEn: "Modern Asynchronous Raw Input",
-        status: "compatible",
-        statusText: "Tamamen Uyumlu",
-        statusTextEn: "Fully Compatible",
-        badgeColor: "bg-gaming-success/10 border-gaming-success/30 text-gaming-success",
-        analysis: "BF2042 ile benzer modern Frostbite altyapısını kullanır. Girdi API'si kararlı çalışır, 8000Hz hızı motoru çökertmez veya takılma yaratmaz. Yarış esnasında sadece kamera dönüşünü etkilediği için performans kaybı yaratmaması teknik açıdan yeterlidir.",
-        analysisEn: "Uses a similar modern Frostbite foundation as BF2042. The Input API runs stably; 8000Hz does not crash the engine or cause stuttering. Since it only affects camera rotation during races, the lack of performance impact is technically sufficient.",
+        status: "partial",
+        statusText: "Kısmen Uyumlu (4000Hz Önerilir)",
+        statusTextEn: "Partially Compatible (4000Hz Recommended)",
+        badgeColor: "bg-gaming-warning/10 border-gaming-warning/30 text-gaming-warning",
+        analysis: "BF2042 ile aynı modern Frostbite tabanını kullanır. BF2042'de 8000Hz'de giriş gecikmesi rapor edilmiştir (EA Forumları); Unbound'a özgü 8000Hz ölçümü bulunmamaktadır. Aynı taban paylaşıldığı için tam uyumlu yerine kısmen uyumlu sınıflandırılmış, en pürüzsüz deneyim için 4000Hz önerilir.",
+        analysisEn: "Shares the same modern Frostbite base as BF2042, where 8000Hz input lag is reported (EA Forums); no Unbound-specific 8000Hz measurement exists. Classified as partially compatible rather than fully compatible due to the shared base; 4000Hz recommended for the smoothest experience.",
         tag: "frostbite"
     },
     {
         id: 23,
         name: "PAYDAY 3",
         nameEn: "PAYDAY 3",
-        engine: "Unreal Engine 4",
-        engineEn: "Unreal Engine 4",
+        engine: "Unreal Engine 4 (çıkış) → Unreal Engine 5 (3.8, Ağu 2026)",
+        engineEn: "Unreal Engine 4 (launch) → Unreal Engine 5 (3.8, Aug 2026)",
         api: "UE4 Default Input Stack (4000/8000Hz Sınırlı)",
         apiEn: "UE4 Default Input Stack (4000/8000Hz Limited)",
         status: "incompatible",
         statusText: "Kesinlikle Uyumsuz",
         statusTextEn: "Strictly Incompatible",
         badgeColor: "bg-gaming-danger/10 border-gaming-danger/30 text-gaming-danger",
-        analysis: "hone.gg optimizasyon rehberine göre Unreal Engine 4 girdi yığını (input stack) 4000Hz ve 8000Hz polling değerlerini işleyemez. Yalnızca kamera hareket ettirildiğinde ritmik takılmalar (rhythmic stuttering) üretir. Çözüm: Oyun içi fare polling değerinin 1000Hz'e düşürülmesi. Starbreeze'in getirdiği performans yamaları bu girdi katmanı sınırlamasını değiştirmemiştir.",
-        analysisEn: "According to the hone.gg optimization guide, the Unreal Engine 4 input stack cannot process 4000Hz and 8000Hz polling rates. It causes rhythmic stuttering only when the camera is moved. Solution: Lower mouse polling rate to 1000Hz. Starbreeze's performance patches have not addressed this input layer limitation.",
+        analysis: "hone.gg optimizasyon rehberine göre Unreal Engine 4 girdi yığını (input stack) 4000Hz ve 8000Hz polling değerlerini işleyemez. Yalnızca kamera hareket ettirildiğinde ritmik takılmalar (rhythmic stuttering) üretir. Çözüm: fare polling değerinin 1000Hz'e düşürülmesi. Oyun 25 Ağustos 2026'daki 3.8 güncellemesiyle UE5'e geçmiştir; UE5 sonrası polling davranışı henüz ölçülmediğinden UE4 dönemi kanıtına dayalı uyumsuz sınıflandırması korunmuştur.",
+        analysisEn: "According to the hone.gg optimization guide, the Unreal Engine 4 input stack cannot process 4000Hz and 8000Hz polling rates. It causes rhythmic stuttering only when the camera is moved. Solution: lower polling to 1000Hz. The game migrated to UE5 with update 3.8 on August 25, 2026; post-UE5 polling behavior is not yet measured, so the incompatible classification based on UE4-era evidence is retained.",
         tag: "unreal"
     },
     {
         id: 24,
         name: "Ready or Not",
         nameEn: "Ready or Not",
-        engine: "Unreal Engine 5.x (UE4→UE5, Aralık 2023)",
-        engineEn: "Unreal Engine 5.x (UE4→UE5, December 2023)",
+        engine: "Unreal Engine 5.3 (UE4.27→UE5.3, Tem 2024 Home Invasion)",
+        engineEn: "Unreal Engine 5.3 (UE4.27→UE5.3, Jul 2024 Home Invasion)",
         api: "Thread-Locked Input Loop",
         apiEn: "Thread-Locked Input Loop",
         status: "incompatible",
         statusText: "Kesinlikle Uyumsuz",
         statusTextEn: "Strictly Incompatible",
         badgeColor: "bg-gaming-danger/10 border-gaming-danger/30 text-gaming-danger",
-        analysis: "Ready or Not, Aralık 2023'te UE4.27'den UE5.x'e geçirilmiştir. UE5 geçişi Enhanced Input sistemini getirse de Void Interactive oyunun girdi altyapısını büyük ölçüde korumuştur. Taktiksel yapay zeka hatları, dinamik çevre öğeleri ve yoğun fizik etkileşimleri ana iş parçacığına aşırı yük bindirir. Girdi işleme süreci hâlâ ana iş parçacığına kilitli (thread-locked) çalıştığı için 8000Hz sinyal yoğunluğu motoru sarsar ve anlık takılmalar üretir.",
-        analysisEn: "Ready or Not was migrated from UE4.27 to UE5.x in December 2023. While the UE5 transition brings the Enhanced Input system, Void Interactive largely preserved the game's existing input architecture. Tactical AI threads, dynamic environment elements and intense physics interactions heavily load the main thread. Input processing remains thread-locked to the main thread, so 8000Hz signal density still shakes the engine and produces momentary stutters.",
+        analysis: "Ready or Not, 23 Temmuz 2024'teki Home Invasion güncellemesiyle UE4.27'den UE5.3'e geçirilmiştir. UE5 geçişi Enhanced Input sistemini getirse de Void Interactive oyunun girdi altyapısını büyük ölçüde korumuştur. Taktiksel yapay zeka hatları, dinamik çevre öğeleri ve yoğun fizik etkileşimleri ana iş parçacığına aşırı yük bindirir. Oyuna özgü 8000Hz ölçümü bulunmamaktadır; girdi işleme ana iş parçacığına bağımlı kaldığı için sınıflandırma ihtiyatlı olarak uyumsuz tutulmuştur.",
+        analysisEn: "Ready or Not was migrated from UE4.27 to UE5.3 with the Home Invasion update on July 23, 2024. While UE5 brings Enhanced Input, Void Interactive largely preserved the existing input architecture. Tactical AI, dynamic environments and heavy physics load the main thread. No game-specific 8000Hz measurement exists; the classification is kept incompatible as a precaution because input remains main-thread dependent.",
         tag: "unreal"
     },
     {
@@ -610,48 +626,48 @@ const games = [
         id: 26,
         name: "Squad - Public Testing",
         nameEn: "Squad - Public Testing",
-        engine: "Unreal Engine 5.7 (UE4→UE5.5→UE5.7, OWI Modifiye)",
-        engineEn: "Unreal Engine 5.7 (UE4→UE5.5→UE5.7, OWI Modified)",
-        api: "OWI Custom Input Layer (Main Thread-Bound RawInput)",
-        apiEn: "OWI Custom Input Layer (Main Thread-Bound RawInput)",
+        engine: "Unreal Engine 5.7 (UE4→UE5.5→UE5.7)",
+        engineEn: "Unreal Engine 5.7 (UE4→UE5.5→UE5.7)",
+        api: "UE5 Enhanced Input (OWI uyarlamalı)",
+        apiEn: "UE5 Enhanced Input (OWI adapted)",
         status: "incompatible",
         statusText: "Kesinlikle Uyumsuz",
         statusTextEn: "Strictly Incompatible",
         badgeColor: "bg-gaming-danger/10 border-gaming-danger/30 text-gaming-danger",
-        analysis: "Squad, Eylül 2025'teki 9.0 güncellemesiyle UE4'ten UE5.5'e, Nisan 2026'daki 10.4 güncellemesiyle de UE5.7'ye geçti (SteamDB/Squad 10.4 Patch Notes). Ancak Offworld Industries, girdi işleme katmanını kendine özel (OWI Custom Input Layer) yazdığı için standart UE5.7 Enhanced Input iyileştirmeleri geçerli değildir. UE5.7'nin CPU kazanımları (render thread paralelleştirme) ana iş parçacığındaki girdi yükünü azaltmaz.",
-        analysisEn: "Squad upgraded from UE4 to UE5.5 with the 9.0 update (September 2025), then to UE5.7 with the 10.4 update (April 2026). However Offworld Industries wrote its own custom input layer (OWI Custom Input Layer), so standard UE5.7 Enhanced Input improvements do not apply. UE5.7's CPU gains (render thread parallelization) do not reduce the input load on the main thread.",
+        analysis: "Squad, Eylül 2025'teki 9.0 güncellemesiyle UE4'ten UE5.5'e, Nisan 2026'daki 10.4 güncellemesiyle de UE5.7'ye geçti. 9.0 notları Nanite, Chaos Physics ve frame pacing düzeltmesi içerir; girdi hattına özgü resmi değişiklik duyurulmamıştır. Bu kayıt ana oyunun test koludur. Oyuna özgü 8000Hz ölçümü bulunmamaktadır; büyük ölçekli simülasyon yükü ve UE genelindeki yüksek polling duyarlılığı nedeniyle ihtiyatlı olarak uyumsuz sınıflandırılmıştır.",
+        analysisEn: "Squad moved from UE4 to UE5.5 with update 9.0 (September 2025) and to UE5.7 with 10.4 (April 2026). The 9.0 notes cover Nanite, Chaos Physics and frame-pacing fixes; no input-pipeline change was officially announced. This entry is the test branch of the main game. No game-specific 8000Hz measurement exists; it is classified incompatible as a precaution due to large-scale simulation load and UE-wide high-polling sensitivity.",
         tag: "unreal"
     },
     {
         id: 27,
         name: "Squad",
         nameEn: "Squad",
-        engine: "Unreal Engine 5.7 (UE4→UE5.5→UE5.7, OWI Modifiye)",
-        engineEn: "Unreal Engine 5.7 (UE4→UE5.5→UE5.7, OWI Modified)",
-        api: "OWI Custom Input Layer (Main Thread-Bound RawInput)",
-        apiEn: "OWI Custom Input Layer (Main Thread-Bound RawInput)",
+        engine: "Unreal Engine 5.7 (UE4→UE5.5→UE5.7)",
+        engineEn: "Unreal Engine 5.7 (UE4→UE5.5→UE5.7)",
+        api: "UE5 Enhanced Input (OWI uyarlamalı)",
+        apiEn: "UE5 Enhanced Input (OWI adapted)",
         status: "incompatible",
         statusText: "Kesinlikle Uyumsuz",
         statusTextEn: "Strictly Incompatible",
         badgeColor: "bg-gaming-danger/10 border-gaming-danger/30 text-gaming-danger",
-        analysis: "Public Testing sürümüyle aynı motor darboğazını paylaşır. Squad'ın UE5.7'ye geçişi (10.4) GPU çökme düzeltmeleri, DLSS 4.5 ve tuş bağlama sistemi revizyonu getirmiştir ancak RawInput boru hattında değişiklik yapılmamıştır. Oyun, girdileri hâlâ ana iş parçacığına kilitli (main thread-bound) şekilde işler.",
-        analysisEn: "Shares the same engine bottleneck as the Public Testing version. Squad's UE5.7 transition (10.4) brought GPU crash fixes, DLSS 4.5 and key binding system revisions, but made no changes to the RawInput pipeline. The game still processes input in a main thread-bound manner.",
+        analysis: "Ana oyun kolu; Public Testing ile aynı UE5.7 tabanını paylaşır. 10.4 güncellemesi GPU çökme düzeltmeleri ve DLSS 4.5 getirmiştir; girdi hattına özgü resmi değişiklik duyurulmamıştır. Oyuna özgü 8000Hz ölçümü bulunmamaktadır; büyük ölçekli simülasyon yükü nedeniyle ihtiyatlı olarak uyumsuz sınıflandırılmıştır.",
+        analysisEn: "Main branch; shares the same UE5.7 base as Public Testing. Update 10.4 brought GPU crash fixes and DLSS 4.5; no input-pipeline change was officially announced. No game-specific 8000Hz measurement exists; classified incompatible as a precaution due to large-scale simulation load.",
         tag: "unreal"
     },
     {
         id: 28,
         name: "The Long Dark",
         nameEn: "The Long Dark",
-        engine: "Unity (Eski Sürüm)",
-        engineEn: "Unity (Legacy Version)",
-        api: "Unity Input Manager (Eski API)",
-        apiEn: "Unity Input Manager (Legacy API)",
+        engine: "Unity 6 (v2.50, Ara 2025; öncesi Unity 5/2019)",
+        engineEn: "Unity 6 (v2.50, Dec 2025; previously Unity 5/2019)",
+        api: "Unity Input Manager",
+        apiEn: "Unity Input Manager",
         status: "incompatible",
         statusText: "Kesinlikle Uyumsuz",
         statusTextEn: "Strictly Incompatible",
         badgeColor: "bg-gaming-danger/10 border-gaming-danger/30 text-gaming-danger",
-        analysis: "Oyun, Unity motorunun eski nesil Input Manager kütüphanesini kullanır. Bu eski mimari, fare verilerini paralel olarak değil, doğrudan her 'Update' döngüsünde ana iş parçacığı üzerinden okur. Saniyede gelen 8000 veri paketi Unity'nin eski girdi kuyruğunu tamamen kilitler.",
-        analysisEn: "The game uses Unity's legacy Input Manager library. This old architecture reads mouse data directly on the main thread through each Update loop, not in parallel. 8000 data packets per second completely lock up Unity's legacy input queue.",
+        analysis: "Oyun Aralık 2025'teki v2.50 güncellemesiyle Unity 6'ya geçmiştir (Episode Five Unity 6 gerektirir). Unity'nin yüksek polling girdilerinde ana iş parçacığı üzerinden okuma yapan mimarisi 8000Hz veri yükünde kilitlenmeye yatkındır. Oyuna özgü 8000Hz ölçümü bulunmamaktadır; sınıflandırma Unity genelindeki yüksek polling duyarlılığına dayalı ihtiyatlı değerlendirmedir.",
+        analysisEn: "The game migrated to Unity 6 with v2.50 in December 2025 (Episode Five requires Unity 6). Unity's main-thread input polling architecture is prone to locking under 8000Hz load. No game-specific 8000Hz measurement exists; the classification is precautionary based on Unity-wide high-polling sensitivity.",
         tag: "unity"
     },
     {
@@ -666,30 +682,31 @@ const games = [
         statusText: "Tamamen Uyumlu",
         statusTextEn: "Fully Compatible",
         badgeColor: "bg-gaming-success/10 border-gaming-success/30 text-gaming-success",
-        analysis: "Swarm Engine, ekrandaki binlerce zombinin yapay zekasını ve fiziklerini aynı anda hesaplamak için muazzam bir asenkron çoklu iş parçacığı mimarisine sahiptir. Girdi katmanı, render ve fizik döngülerinden bağımsız izole bir thread'de çalışır. 8000Hz girdi akışını kusursuz işler.",
-        analysisEn: "The Swarm Engine has a massive asynchronous multi-threaded architecture designed to simultaneously calculate the AI and physics of thousands of zombies on screen. The input layer runs in an isolated thread independent of render and physics loops. Processes 8000Hz input streams flawlessly.",
+        analysis: "Swarm Engine, ekrandaki çok sayıda zombinin yapay zekasını ve fiziklerini aynı anda hesaplamak için asenkron çoklu iş parçacığı mimarisine sahiptir. Oyuna özgü 8000Hz sorunu rapor edilmemiştir; modern çok çekirdekli mimari 8000Hz yükünü kaldırmaya yatkındır. Kesin ölçüm bulunmadığından uyumlu sınıflandırması ihtiyatlı olumlu değerlendirmedir.",
+        analysisEn: "The Swarm Engine uses an asynchronous multi-threaded architecture for large-scale AI and physics. No game-specific 8000Hz issue is reported; the modern multi-core architecture is suited to 8000Hz load. As no definitive measurement exists, the compatible classification is a cautiously positive assessment.",
         tag: "other"
     },
     {
         id: 30,
         name: "Zero Hour",
         nameEn: "Zero Hour",
-        engine: "Unity (Modern Sürüm)",
-        engineEn: "Unity (Modern Version)",
+        engine: "Unity",
+        engineEn: "Unity",
         api: "Standard Input Pipeline",
         apiEn: "Standard Input Pipeline",
         status: "incompatible",
         statusText: "Kesinlikle Uyumsuz",
         statusTextEn: "Strictly Incompatible",
         badgeColor: "bg-gaming-danger/10 border-gaming-danger/30 text-gaming-danger",
-        analysis: "Bağımsız (indie) bir taktiksel FPS olan Zero Hour, Unity motorunun modern ham girdi optimizasyonlarına sahip değildir. Standart girdi hattından geçen 8000Hz verisi, oyun kodunun ana döngüsünde yığılma yapar. Bu durum nişangahın arkadan gelmesine (input lag) veya fareyi hızlı çevirirken takılmalara yol açar.",
-        analysisEn: "Zero Hour, an indie tactical FPS, does not have Unity's modern raw input optimizations. 8000Hz data passing through the standard input pipeline builds up in the game code's main loop. This causes crosshair lag (input lag) or stuttering during fast mouse turns.",
+        analysis: "Bağımsız (indie) bir taktiksel FPS olan Zero Hour Unity kullanır; sürüm/Input System bilgisi resmi kaynaklarda belirtilmemiştir. Unity genelindeki yüksek polling duyarlılığı nedeniyle 8000Hz verisi ana döngüde yığılma yapabilir. Oyuna özgü 8000Hz ölçümü bulunmamaktadır; sınıflandırma ihtiyatlı değerlendirmedir.",
+        analysisEn: "Zero Hour, an indie tactical FPS, uses Unity; no official source specifies the version/Input System. Due to Unity-wide high-polling sensitivity, 8000Hz data may build up in the main loop. No game-specific 8000Hz measurement exists; the classification is precautionary.",
         tag: "unity"
     }
 ];
 
 window.onscroll = function () {
     const btn = document.getElementById("back-to-top");
+    if (!btn) { return; }
     if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
         btn.classList.remove("hidden");
     } else {
@@ -698,7 +715,18 @@ window.onscroll = function () {
 };
 
 function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    try { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    catch (e) { window.scrollTo(0, 0); }
+}
+
+function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) { el.innerText = value; }
+}
+
+function setBarWidth(id, percent) {
+    const el = document.getElementById(id);
+    if (el) { el.style.width = percent; }
 }
 
 function calculateAndRenderMetrics() {
@@ -707,31 +735,37 @@ function calculateAndRenderMetrics() {
     const partial = games.filter(g => g.status === 'partial').length;
     const incompatible = games.filter(g => g.status === 'incompatible').length;
 
-    document.getElementById("stat-total").innerText = total;
-    document.getElementById("stat-compatible").innerText = compatible;
-    document.getElementById("stat-partial").innerText = partial;
-    document.getElementById("stat-incompatible").innerText = incompatible;
+    setText("stat-total", total);
+    setText("stat-compatible", compatible);
+    setText("stat-partial", partial);
+    setText("stat-incompatible", incompatible);
 
-    document.getElementById("bar-total").style.width = "100%";
-    document.getElementById("bar-compatible").style.width = `${(compatible / total) * 100}%`;
-    document.getElementById("bar-partial").style.width = `${(partial / total) * 100}%`;
-    document.getElementById("bar-incompatible").style.width = `${(incompatible / total) * 100}%`;
+    setBarWidth("bar-total", "100%");
+    if (total > 0) {
+        setBarWidth("bar-compatible", `${(compatible / total) * 100}%`);
+        setBarWidth("bar-partial", `${(partial / total) * 100}%`);
+        setBarWidth("bar-incompatible", `${(incompatible / total) * 100}%`);
+    }
 }
 
 function renderGames(gamesList) {
     const grid = document.getElementById("games-grid");
     const emptyState = document.getElementById("empty-state");
+    if (!grid) { return; }
+    if (!Array.isArray(gamesList)) { gamesList = games; }
+    filteredGamesCache = gamesList;
     grid.innerHTML = "";
 
     if (gamesList.length === 0) {
-        emptyState.classList.remove("hidden");
+        if (emptyState) { emptyState.classList.remove("hidden"); }
         return;
     } else {
-        emptyState.classList.add("hidden");
+        if (emptyState) { emptyState.classList.add("hidden"); }
     }
 
     const isEn = currentLang === 'en';
-    const detailLabel = isEn ? 'DETAILED TECHNICAL ANALYSIS' : 'DETAYLI TEKNİK ANALİZ';
+    const dict = translations[currentLang] || translations.tr;
+    const detailLabel = dict['detail-btn'] || (isEn ? 'DETAILED TECHNICAL ANALYSIS' : 'DETAYLI TEKNİK ANALİZ');
 
     gamesList.forEach(game => {
         let iconSvg = '';
@@ -791,21 +825,26 @@ function renderGames(gamesList) {
 }
 
 function toggleDetails(button) {
+    if (!button) { return; }
     const container = button.nextElementSibling;
     const svg = button.querySelector('svg');
+    if (!container) { return; }
     if (container.classList.contains('hidden')) {
         container.classList.remove('hidden');
-        svg.classList.add('rotate-180');
+        if (svg) { svg.classList.add('rotate-180'); }
     } else {
         container.classList.add('hidden');
-        svg.classList.remove('rotate-180');
+        if (svg) { svg.classList.remove('rotate-180'); }
     }
 }
 
 function filterGames() {
-    const searchValue = document.getElementById("search-input").value.toLowerCase();
-    const statusValue = document.getElementById("status-filter").value;
-    const engineValue = document.getElementById("engine-filter").value;
+    const searchEl = document.getElementById("search-input");
+    const statusEl = document.getElementById("status-filter");
+    const engineEl = document.getElementById("engine-filter");
+    const searchValue = searchEl && searchEl.value ? searchEl.value.toLowerCase() : "";
+    const statusValue = statusEl ? statusEl.value : "all";
+    const engineValue = engineEl ? engineEl.value : "all";
 
     const filtered = games.filter(game => {
         const gName = (currentLang === 'en' && game.nameEn) ? game.nameEn : game.name;
@@ -827,17 +866,25 @@ function filterGames() {
 }
 
 function resetFilters() {
-    document.getElementById("search-input").value = "";
-    document.getElementById("status-filter").value = "all";
-    document.getElementById("engine-filter").value = "all";
+    const searchEl = document.getElementById("search-input");
+    const statusEl = document.getElementById("status-filter");
+    const engineEl = document.getElementById("engine-filter");
+    if (searchEl) { searchEl.value = ""; }
+    if (statusEl) { statusEl.value = "all"; }
+    if (engineEl) { engineEl.value = "all"; }
     filterGames();
 }
 
 function calculateCompatibility() {
-    const cpu = document.querySelector('input[name="cpu-power"]:checked').value;
-    const year = document.getElementById("diag-year").value;
-    const engine = document.getElementById("diag-engine").value;
-    const api = document.querySelector('input[name="api-type"]:checked').value;
+    const cpuEl = document.querySelector('input[name="cpu-power"]:checked');
+    const yearEl = document.getElementById("diag-year");
+    const engineEl = document.getElementById("diag-engine");
+    const apiEl = document.querySelector('input[name="api-type"]:checked');
+    if (!cpuEl || !yearEl || !engineEl || !apiEl) { return; }
+    const cpu = cpuEl.value;
+    const year = yearEl.value;
+    const engine = engineEl.value;
+    const api = apiEl.value;
 
     let score = 0;
     if (cpu === 'high') score += 25;
@@ -859,16 +906,19 @@ function calculateCompatibility() {
     const statusDot = document.getElementById("diag-status-dot");
     const statusText = document.getElementById("diag-status-text");
     const feedback = document.getElementById("diag-feedback");
+    if (!resultState || !initialState || !scoreText || !progressBar || !statusDot || !statusText || !feedback) { return; }
 
     initialState.classList.add("hidden");
     resultState.classList.remove("hidden");
 
     progressBar.className = "h-full rounded-full transition-all duration-1000";
 
+    if (diagInterval) { clearInterval(diagInterval); diagInterval = null; }
     let currentScore = 0;
-    const interval = setInterval(() => {
+    diagInterval = setInterval(() => {
         if (currentScore >= score) {
-            clearInterval(interval);
+            clearInterval(diagInterval);
+            diagInterval = null;
         } else {
             currentScore++;
             scoreText.innerText = currentScore + "%";
@@ -906,11 +956,12 @@ function calculateCompatibility() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+    const toggle = document.getElementById('lang-toggle');
     if (currentLang === 'en') {
-        document.documentElement.lang = 'en';
-        document.getElementById('lang-toggle').textContent = 'TR';
+        if (document.documentElement) { document.documentElement.lang = 'en'; }
+        if (toggle) { toggle.textContent = 'TR'; }
     }
     applyTranslations();
-    renderGames(games);
+    filterGames();
     calculateAndRenderMetrics();
 });
